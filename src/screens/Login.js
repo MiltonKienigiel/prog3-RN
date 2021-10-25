@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text, TextInput, TouchableOpacity, View, StyleSheet} from 'react-native';
+import { auth } from '../firebase/config';
 
 export default class Login extends Component {
     constructor(props) {
@@ -9,12 +10,11 @@ export default class Login extends Component {
             password: "",
             loggedIn: false,
             error: ""
-
         }
     }
 
     handleLogin() {
-        auth.signIWithEmailAndPassword(this.state.email,this.state.password)
+        auth.signInWithEmailAndPassword(this.state.email,this.state.password)
         .then(response => {
             console.log(response)
             alert('usuario logueado')
@@ -24,9 +24,9 @@ export default class Login extends Component {
         })
         .catch( error => {
             console.log(error);
-            alert("Error en el registro");
+            alert("Error en el inicio de sesión.");
             this.setState({
-                error: "Fallo en el registro"
+                error: "Error en el inicio de sesión."
             })
         })
         

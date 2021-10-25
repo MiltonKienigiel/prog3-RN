@@ -17,7 +17,7 @@ export default class Register extends Component {
         auth.createUserWithEmailAndPassword(this.state.email, this.state.password)
         .then( response => {
             console.log(response);
-            alert("Usuario registrado!");
+            alert("¡Usuario registrado!");
             this.setState({
                 loggedIn: true
             })
@@ -31,10 +31,10 @@ export default class Register extends Component {
         })
     }
 
-render() {
+    render() {
         return (
             <View style={styles.container}>
-                <Text>Login</Text>
+                <Text>Registrarme</Text>
                 <TextInput
                     style={styles.field}
                     keyboardType="email-address"
