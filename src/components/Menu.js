@@ -27,22 +27,87 @@ export default class Menu extends Component {
                 })
             }
         })
-    }
+    } //Component
+
+    handleRegister(email,password) {
+        auth.createUserWithEmailAndPassword(email, password)
+        .then( response => {
+            console.log(response);
+            alert("¡Usuario registrado!");
+            this.setState({
+                loggedIn: true
+            })
+            this.props.Navigation.navigation('Home')
+        })
+        .catch( error => {
+            console.log(error);
+            alert("Error en el registro");
+            this.setState({
+                error: "Fallo en el registro"
+            })
+        })
+    } //Register
+
+    handleLogin(email,password) {
+        auth.signInWithEmailAndPassword(email,password)
+        .then(response => {
+            console.log(response)
+            alert('usuario logueado')
+            this.setState({
+                loggedIn: true
+            })
+        })
+        .catch( error => {
+            console.log(error);
+            alert("Error en el inicio de sesión.");
+            this.setState({
+                error: "Error en el inicio de sesión."
+            })
+        })
+        
+    } //Login
+
+    handleLogout(){
+        auth.signOut()
+        .then (() =>{
+            this.setState ({
+                loggedIn: false
+            })
+            alert('Cerraste sesión')
+        })
+        .catch(error =>{
+            console.log(error)
+            alert('Error en el deslogueo')
+        })
+    } //Logout
+
+
   
     render(){
-        const Stack = createDrawerNavigator()
+        const Drawer = createDrawerNavigator()
 
         return (
-            <NavigationContainer>
-                <Stack.Navigator>
-                    <Stack.Screen name = "Home" component={()=> <Home/>}></Stack.Screen>
-                    <Stack.Screen name = "Register" component={()=> <Register/>}></Stack.Screen>
-                    <Stack.Screen name = "Login" component={()=> <Login/>}></Stack.Screen>
-                </Stack.Navigator>
-            </NavigationContainer>
-        );
-    }
-}
+                <Drawer.Navigator initialRouteName="Login">
+                    {this.state.loggedIn === true ? 
+                    <Drawer.Screen name = "Home">
+                        {props => <Home {...props} handleLogout={()=>this.handleLogout()}/>}
+                    </Drawer.Screen>
+                    :
+                    <>
+                        <Drawer.Screen name="Login">
+                            {props => <Login {...props} handleLogin={(email, password)=>this.handleLogin(email, password)}/>}
+                        </Drawer.Screen>
+                        <Drawer.Screen name = "Registro">
+                            {props => <Register {...props} handleRegister={(email, password)=>this.handleRegister(email, password)}/>}
+                        </Drawer.Screen>
+                    </>
+                }
+                </Drawer.Navigator>
+
+
+        ); // Return
+    } // Render
+} // Component
 
 const styles = StyleSheet.create({
   container: {

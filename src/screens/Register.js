@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Text, TextInput, TouchableOpacity, View, StyleSheet} from 'react-native';
 import {auth} from '../firebase/config'
+import {NavigationContainer} from '@react-navigation/native'
+
 
 export default class Register extends Component {
     constructor(props) {
@@ -10,25 +12,6 @@ export default class Register extends Component {
             password: "", 
             error: ""
         }
-    }
-
-    handleRegister() {
-        //alert(`REGISTRO: usuario: ${this.state.email}, password: ${this.state.password}`)
-        auth.createUserWithEmailAndPassword(this.state.email, this.state.password)
-        .then( response => {
-            console.log(response);
-            alert("¡Usuario registrado!");
-            this.setState({
-                loggedIn: true
-            })
-        })
-        .catch( error => {
-            console.log(error);
-            alert("Error en el registro");
-            this.setState({
-                error: "Fallo en el registro"
-            })
-        })
     }
 
     render() {
