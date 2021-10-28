@@ -29,11 +29,14 @@ export default class Menu extends Component {
         })
     } //Component
 
-    handleRegister(email,password) {
+    handleRegister(email,password, username) {
         auth.createUserWithEmailAndPassword(email, password)
         .then( response => {
             console.log(response);
             alert("¡Usuario registrado!");
+            response.user.updateProfile({
+                displayName: username
+            })
             this.setState({
                 loggedIn: true
             })
@@ -98,7 +101,7 @@ export default class Menu extends Component {
                             {props => <Login {...props} handleLogin={(email, password)=>this.handleLogin(email, password)}/>}
                         </Drawer.Screen>
                         <Drawer.Screen name = "Registro">
-                            {props => <Register {...props} handleRegister={(email, password)=>this.handleRegister(email, password)}/>}
+                            {props => <Register {...props} handleRegister={(email, password, username)=>this.handleRegister(email, password, username)}/>}
                         </Drawer.Screen>
                     </>
                 }

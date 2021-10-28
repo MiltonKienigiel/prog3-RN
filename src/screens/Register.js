@@ -10,6 +10,7 @@ export default class Register extends Component {
         this.state = {
             email: "",
             password: "", 
+            username: "",
             error: ""
         }
     }
@@ -24,6 +25,13 @@ export default class Register extends Component {
                     placeholder="email"
                     onChangeText={text => this.setState({ email: text })}
                 />
+
+                <TextInput
+                    style={styles.field}
+                    keyboardType='default'
+                    placeholder="Username"
+                    onChangeText={text => this.setState({ username: text })}
+                />
                 <TextInput
                     style={styles.field}
                     keyboardType='number-pad'
@@ -31,7 +39,8 @@ export default class Register extends Component {
                     secureTextEntry={true}
                     onChangeText={text => this.setState({ password: text })}
                 />
-                <TouchableOpacity style = {styles.button} onPress={() => this.handleRegister()}>
+
+                <TouchableOpacity style = {styles.button} onPress={() => this.handleRegister(this.state.email,this.state.password)}>
                     <Text style = {styles.text}> Register </Text>
                 </TouchableOpacity>
             </View>
