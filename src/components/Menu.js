@@ -40,7 +40,6 @@ export default class Menu extends Component {
             this.setState({
                 loggedIn: true
             })
-            this.props.Navigation.navigation('Home')
         })
         .catch( error => {
             console.log(error);
@@ -83,8 +82,6 @@ export default class Menu extends Component {
             alert('Error en el deslogueo')
         })
     } //Logout
-
-
   
     render(){
         const Drawer = createDrawerNavigator()
@@ -92,9 +89,12 @@ export default class Menu extends Component {
         return (
                 <Drawer.Navigator initialRouteName="Login">
                     {this.state.loggedIn === true ? 
-                    <Drawer.Screen name = "Home">
+
+                    <>
+                        <Drawer.Screen name = "Home">
                         {props => <Home {...props} handleLogout={()=>this.handleLogout()}/>}
-                    </Drawer.Screen>
+                        </Drawer.Screen>
+                    </>
                     :
                     <>
                         <Drawer.Screen name="Login">
