@@ -9,49 +9,59 @@ export default class Register extends Component {
         super(props);
         this.state = {
             email: "",
-            password: "", 
             username: "",
+            password: "",
+            checkPassword: "",
             error: ""
         }
     }
 
     register (){
-        if(this.state.email != "" && this.state.password !== "" && this.state.username !== "" ){
+        if(this.state.email == "" && this.state.password == "" && this.state.username == ""){
+            alert('Todos los campos son obligatorios.')
+        } else if (!this.state.email.includes('@')){
+            alert('El formato de e-mail no es válido.')
+        } else if (this.state.password.length < 6){
+            alert('La contraseña debe tener al menos 6 caracteres.')
+        } else if (this.state.password !== this.state.checkPassword){
+            alert('Por favor, repita la misma contraseña.')
+        } else {
             this.props.handleRegister(this.state.email, this.state.password, this.state.username)
-        } // IF
-        else{
-            alert('¡Completar los campos!')
         }
-
     } // Register
 
     render() {
         return (
             <View style={styles.container}>
-                <Text>Registrarme</Text>
                 <TextInput
                     style={styles.field}
                     keyboardType="email-address"
-                    placeholder="email"
+                    placeholder="E-mail"
                     onChangeText={text => this.setState({ email: text })}
                 />
-
                 <TextInput
                     style={styles.field}
                     keyboardType='default'
-                    placeholder="Username"
+                    placeholder="Nombre de usuario"
                     onChangeText={text => this.setState({ username: text })}
                 />
                 <TextInput
                     style={styles.field}
-                    keyboardType='number-pad'
-                    placeholder="password"
+                    keyboardType='default'
+                    placeholder="Contraseña"
                     secureTextEntry={true}
                     onChangeText={text => this.setState({ password: text })}
                 />
+                <TextInput
+                    style={styles.field}
+                    keyboardType='default'
+                    placeholder="Repetir contraseña"
+                    secureTextEntry={true}
+                    onChangeText={text => this.setState({ checkPassword: text })}
+                />
 
                 <TouchableOpacity style = {styles.button} onPress={() => this.register()}>
-                    <Text style = {styles.text}> Register </Text>
+                    <Text style = {styles.text}> Registrarme </Text>
                 </TouchableOpacity>
             </View>
         )
@@ -75,6 +85,8 @@ const styles = StyleSheet.create({
         backgroundColor: "#0F00FF",
     },
     text: {
-        color: '#FFA400'
+        color: '#FFA400',
+        textAlign: 'center'
+
     }
 })

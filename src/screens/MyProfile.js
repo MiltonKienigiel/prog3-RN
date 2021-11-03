@@ -32,13 +32,19 @@ export default class Home extends Component{
     render(){
         return(
             <View style={styles.container}>
-                <Text> ¡Hola {auth.currentUser.username}! </Text> {/* NO LEE USERNAME */}
+                <Text>Usuario: {auth.currentUser.username}</Text> {/* NO LEE USERNAME */}
+                <Text>E-mail: {auth.currentUser.email}</Text>
+                <Text>Última fecha de ingreso: </Text> {/* AGREGAR FECHA ULT DE INGRESO */}
+                <Text>Publicaciones: </Text> {/* AGREGAR CANTIDAD DE POSTEOS */}
+                <TouchableOpacity style = {styles.button} onPress={()=> this.props.handleLogout()}>
+                    <Text style = {styles.text}> Cerrar sesión </Text>
+                </TouchableOpacity>
                 <FlatList
                     data = {this.state.posts}
                     keyExtractor = {post => post.id.toString()}
                     renderItem= {({item})=>
                     <Post item = {item}></Post>}
-                /> 
+                /> {/* FILTRAR SOLO MIS POSTEOS */}
             </View>
         )
     }
@@ -47,9 +53,21 @@ export default class Home extends Component{
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: 'yellow'
+        alignItems: 'center'
+    },
+    field: {
+        width: '80%',
+        backgroundColor: "#09009B",
+        color: '#FFA400',
+        padding: 10,
+        marginVertical: 10
+    },
+    button: {
+        width: '100%',
+        backgroundColor: "#0F00FF",
+    },
+    text: {
+        color: '#FFA400',
+        textAlign: 'center'
     }
 })
