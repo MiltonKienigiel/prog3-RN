@@ -14,7 +14,9 @@ export default class CreatePost extends Component {
         db.collection('posts').add({
             owner: auth.currentUser.displayName,
             description: this.state.comment,
-            createdAt: Date.now()
+            createdAt: Date.now(),
+            likes: [],
+            comments: []
         })
         .then(response=>{
             console.log(response)
