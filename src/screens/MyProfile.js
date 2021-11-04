@@ -13,29 +13,41 @@ export default class Home extends Component{
     } // Constructor
 
     componentDidMount(){
-        db.collection('posts').orderBy('createdAt', 'desc').onSnapshot(
-            docs=> {
-                let postsAux= []
-                docs.forEach (doc =>{
-                    postsAux.push({
-                        id: doc.id,
-                        data: doc.data()
-                    })
-                }) // For each
-                this.setState({
-                    posts: postsAux
-                })
+        db.collection('posts')
+            .where('owner', '==', auth.currentUser.displayName)
+            .orderBy('createdAt', 'desc')
+            .onSnapshot(
+                docs=> {
+                    let postsAux= []
+                    docs.forEach (doc =>{
+                        postsAux.push({
+                            id: doc.id,
+                            data: doc.data()
+                        })
+                    }) // For each
+                    this.setState({
+                        posts: postsAux
+                    }
+            )
             }// docs
         ) //Snapshot
     } //Component
 
+    verData(){
+        console.log(auth.currentUser)
+        console.log(this.state.posts)
+    }
+
     render(){
         return(
             <View style={styles.container}>
-                <Text>Usuario: {auth.currentUser.username}</Text> {/* NO LEE USERNAME */}
+                <TouchableOpacity style = {styles.button} onPress={()=> this.verData()}>
+                    <Text style = {styles.text}> ver data en consola </Text>
+                </TouchableOpacity>
+                <Text>Usuario: {auth.currentUser.displayName}</Text>
                 <Text>E-mail: {auth.currentUser.email}</Text>
-                <Text>Última fecha de ingreso: </Text> {/* AGREGAR FECHA ULT DE INGRESO */}
-                <Text>Publicaciones: </Text> {/* AGREGAR CANTIDAD DE POSTEOS */}
+                <Text>Última fecha de ingreso: {auth.currentUser.metadata.lastSignInTime}</Text>
+                <Text>Publicaciones: {this.state.posts.length}</Text> {/* AGREGAR CANTIDAD DE POSTEOS */}
                 <TouchableOpacity style = {styles.button} onPress={()=> this.props.handleLogout()}>
                     <Text style = {styles.text}> Cerrar sesión </Text>
                 </TouchableOpacity>

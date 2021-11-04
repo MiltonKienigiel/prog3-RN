@@ -32,7 +32,7 @@ export default class Home extends Component{
     render(){
         return(
             <View style={styles.container}>
-                <Text> ¡Hola {auth.currentUser.username}! </Text> {/* NO LEE USERNAME */}
+                <Text> ¡Hola {auth.currentUser.displayName}!</Text>
                 <FlatList
                     data = {this.state.posts}
                     keyExtractor = {post => post.id.toString()}

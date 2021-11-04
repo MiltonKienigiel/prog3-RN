@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, TextInput, TouchableOpacity, View, StyleSheet} from 'react-native';
-import {auth} from '../firebase/config'
+import {auth,db} from '../firebase/config'
 import {NavigationContainer} from '@react-navigation/native'
 
 
@@ -12,15 +12,46 @@ export default class Register extends Component {
             username: "",
             password: "",
             checkPassword: "",
-            error: ""
+            error: "",
+            users: []
+        }
+    }
+
+    componentDidMount(){
+        db.collection('users')
+            .onSnapshot(
+                docs=> {
+                    let usersAux= []
+                    docs.forEach (doc =>{
+                        usersAux.push(doc.data())
+                    }) // For each
+                    this.setState({
+                        users: usersAux
+                    }
+            )
+            }// docs
+        ) //Snapshot
+        console.log(this.state.users)
+    }
+
+    validateUsername(){
+        let filteredUsers = this.state.users.filter((user)=>{
+            return user.username == this.state.username
+        })
+        if (filteredUsers.length > 0){
+            return true
+        } else {
+            return false
         }
     }
 
     register (){
-        if(this.state.email == "" && this.state.password == "" && this.state.username == ""){
+        if (this.state.email == "" && this.state.password == "" && this.state.username == ""){
             alert('Todos los campos son obligatorios.')
         } else if (!this.state.email.includes('@')){
             alert('El formato de e-mail no es válido.')
+        } else if (this.validateUsername()) {
+            alert('Este nombre de usuario ya está en uso. Por favor, elija otro.')
         } else if (this.state.password.length < 6){
             alert('La contraseña debe tener al menos 6 caracteres.')
         } else if (this.state.password !== this.state.checkPassword){

@@ -7,7 +7,7 @@ import Login from '../screens/Login'
 import Register from '../screens/Register'
 import CreatePost from '../screens/CreatePost'
 import MyProfile from '../screens/MyProfile'
-import { auth } from '../firebase/config';
+import { auth, db } from '../firebase/config';
 
 
 export default class Menu extends Component {
@@ -34,6 +34,10 @@ export default class Menu extends Component {
         auth.createUserWithEmailAndPassword(email, password)
         .then( response => {
             console.log(response);
+            db.collection('users').add({
+                username: username,
+                createdAt: Date.now()
+            })
             alert("¡Usuario registrado!");
             response.user.updateProfile({
                 displayName: username
@@ -44,7 +48,9 @@ export default class Menu extends Component {
         })
         .catch( error => {
             console.log(error);
-            alert("Error en el registro");
+            if (error == 'Error: The email address is already in use by another account.'){
+                alert('Este e-mail ya está registrado. Por favor, utilice otro.');
+            }
             this.setState({
                 error: "Error en el registro."
             })
