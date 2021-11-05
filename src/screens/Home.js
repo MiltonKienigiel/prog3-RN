@@ -50,6 +50,6 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: 'yellow'
+        backgroundImage: 'linear-gradient(45deg, #FBDA61 0%, #FF5ACD 100%)',
     }
 })

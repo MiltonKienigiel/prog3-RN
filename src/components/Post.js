@@ -66,27 +66,27 @@ export default class Post extends Component {
 
         console.log(this.props.dataItem);
         return(
-            <View stlye={styles.container}>
-                <Text>{this.props.dataItem.data.description}</Text>
-                <Text>{this.props.dataItem.data.createdAt}</Text>
-                <Text>{this.props.dataItem.data.owner}</Text>
-                <Text>Likes: {this.state.likes}</Text>
+            <View style={styles.container}>
+                <Text style={styles.text}>{this.props.dataItem.data.description}</Text>
+                <Text style={styles.text}>{this.props.dataItem.data.createdAt}</Text>
+                <Text style={styles.text}>{this.props.dataItem.data.owner}</Text>
+                <Text style={styles.text}>Likes: {this.state.likes}</Text>
                 {
                     !this.state.liked ?
-                    <TouchableOpacity onPress = {()=> this.onLike()}>
-                        <Text>
+                    <TouchableOpacity style={styles.btn} onPress = {()=> this.onLike()}>
+                        <Text style={styles.text}>
                             Like
                         </Text>
                     </TouchableOpacity>
                     :
-                    <TouchableOpacity onPress = {()=> this.onDislike()}>
-                        <Text>
+                    <TouchableOpacity style={styles.btn} onPress = {()=> this.onDislike()}>
+                        <Text style={styles.text}>
                             Unlike
                         </Text>
                     </TouchableOpacity>
                 }
-                <TouchableOpacity onPress={()=>{this.showModal()}}>
-                    <Text>
+                <TouchableOpacity style={styles.btn} onPress={()=>{this.showModal()}}>
+                    <Text style={styles.text}>
                         Ver comentarios
                     </Text>
                 </TouchableOpacity>
@@ -94,10 +94,10 @@ export default class Post extends Component {
                     this.state.showModal ?
 
                         <Modal 
-                        animationType = "fade"
-                        transparent = {false}
-                        visible = {this.state.showModal}
-                        style = {styles.modal}
+                            animationType = "fade"
+                            transparent = {false}
+                            visible = {this.state.showModal}
+                            style = {styles.modal}
                         >
                             <View style={styles.modalView}>
                                 {/* Botón de cierre del modal */}
@@ -125,15 +125,36 @@ export default class Post extends Component {
 const styles = StyleSheet.create({
     image: {
         height: 200,
-    
     },
     container:{
         flex: 1,
+        width: '60%',
         justifyContent: 'center',
-        padding: 5,
+        padding: 10,
+        margin: 'auto',
+        marginTop: 15,
+        borderRadius: 15,
+        shadowColor: "black",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+        backgroundColor: 'rgba(0, 0, 0, 0.247)',
     },
-    
-    closeModal:{
+    text: {
+        color: 'white',
+        textAlign: 'center',
+    },
+    btn: {
+        backgroundColor: 'red',
+        padding: 7,
+        marginTop: 5,
+        borderRadius: 15,
+    },
+    closeModal: {
         alignSelf: 'flex-end',
         padding: 10,
         backgroundColor: '#dc3545',
@@ -141,7 +162,6 @@ const styles = StyleSheet.create({
         marginBotom: 10,
         borderRadius: 4,
     },
-
     modalText:{
         fontWeight: 'bold',
         color:'#fff',
