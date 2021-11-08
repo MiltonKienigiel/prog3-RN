@@ -6,16 +6,18 @@ import {
   StyleSheet,
   TouchableOpacity,
   Modal,
+  FlatList,
 } from "react-native";
 import { auth, db } from "../firebase/config";
 import firebase from "firebase";
-
+import Comments from "../components/Comments";
 export default class Post extends Component {
   constructor(props) {
     super(props);
     this.state = {
       liked: false,
       likes: 0,
+      showModal: false,
     };
   } //Constructor
 
@@ -72,6 +74,12 @@ export default class Post extends Component {
       showModal: true,
     });
   } //Show modal
+  closeModal() {
+    console.log("chau modal");
+    this.setState({
+      showModal: false,
+    });
+  } //Show modal
 
   render() {
     console.log(this.props.dataItem);
@@ -109,21 +117,11 @@ export default class Post extends Component {
             visible={this.state.showModal}
             style={styles.modal}
           >
-            <View style={styles.modalView}>
-              {/* Botón de cierre del modal */}
-              <TouchableOpacity
-                style={styles.closeModal}
-                onPress={() => {
-                  this.closeModal();
-                }}
-              >
-                <Text style={styles.modalText}>X</Text>
-              </TouchableOpacity>
-              <Text>Aquí también irán los comentarios!</Text>
-              <Text>
-                Aquí también debe ir la posibilidad de agregar un comentario
-              </Text>
-            </View>
+            <Comments
+              comments={this.props.dataItem.data.comments}
+              closeModal={() => this.closeModal()}
+              postId={this.props.dataItem.id}
+            />
           </Modal>
         ) : null}
       </View>
