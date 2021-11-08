@@ -15,7 +15,6 @@ export default class Menu extends Component {
     this.state = {
       loggedIn: false,
       error: null,
-     
     };
   }
 
