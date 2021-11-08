@@ -16,7 +16,6 @@ export default class Post extends Component {
     this.state = {
       liked: false,
       likes: 0,
-     
     };
   } //Constructor
 
@@ -77,8 +76,11 @@ export default class Post extends Component {
   render() {
     console.log(this.props.dataItem);
     return (
-       
       <View style={styles.container}>
+        <Image
+          style={styles.image}
+          source={{ uri: this.props.dataItem.data.photo }}
+        />
         <Text style={styles.text}>{this.props.dataItem.data.description}</Text>
         <Text style={styles.text}>{this.props.dataItem.data.createdAt}</Text>
         <Text style={styles.text}>{this.props.dataItem.data.owner}</Text>

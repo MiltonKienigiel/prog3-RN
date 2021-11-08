@@ -6,8 +6,9 @@ import {
   TouchableOpacity,
   View,
   StyleSheet,
+  Image,
 } from "react-native";
-import { auth, db } from "../firebase/config";
+import { auth, db, storage } from "../firebase/config";
 export default class CreatePost extends Component {
   constructor(props) {
     super(props);
@@ -35,12 +36,41 @@ export default class CreatePost extends Component {
       });
     });
   }
+  uploadImage() {
+    fetch(this.state.photo)
+      .then((res) => res.blob())
+      .then((image) => {
+        const ref = storage.ref(`camera/${Date.now()}.jpg`);
+        ref.put(image).then(() => {
+          ref.getDownloadURL().then((url) => {
+            console.log(url);
+            this.setState({
+              photo: "",
+            });
+            this.props.onImageUpload(url);
+          });
+        });
+      });
+  }
 
+  onReject() {
+    this.setState({
+      photo: "",
+    });
+  }
   render() {
     return (
       <View style={styles.container}>
         {this.state.photo ? (
-          <> </>
+          <>
+            <Image style={styles.preview} source={{ uri: this.state.photo }} />
+            <TouchableOpacity onPress={() => this.onReject()}>
+              <Text>Cancelar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.uploadImage()}>
+              <Text>Subir</Text>
+            </TouchableOpacity>
+          </>
         ) : (
           <>
             <Camera
@@ -65,6 +95,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
+    width: "100%",
+  },
+  preview: {
+    flex: 1,
     width: "100%",
   },
   camera: {

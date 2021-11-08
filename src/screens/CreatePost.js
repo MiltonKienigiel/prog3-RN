@@ -5,9 +5,10 @@ import {
   TouchableOpacity,
   View,
   StyleSheet,
+  Image,
 } from "react-native";
 import { auth, db } from "../firebase/config";
-import MyCamera from "../screens/MyCamera";
+import MyCamera from "../components/MyCamera";
 export default class CreatePost extends Component {
   constructor(props) {
     super(props);
@@ -27,6 +28,7 @@ export default class CreatePost extends Component {
         createdAt: Date.now(),
         likes: [],
         comments: [],
+        photo: this.state.photo,
       })
       .then((response) => {
         console.log(response);
@@ -40,14 +42,21 @@ export default class CreatePost extends Component {
         alert("No se pudo crear tu publicación.");
       });
   } // Handle post
-
+  savePhoto(url) {
+    console.log("este es el url: ", url);
+    this.setState({
+      photo: url,
+      showCamera: false,
+    });
+  }
   render() {
     return (
       <View style={styles.container}>
         {this.state.showCamera ? (
-          <MyCamera />
+          <MyCamera onImageUpload={(url) => this.savePhoto(url)} />
         ) : (
           <>
+            <Image source={{ uri: this.state.photo }} style={styles.image} />
             <TextInput
               style={styles.field}
               keyboardType="default"
@@ -73,7 +82,7 @@ export default class CreatePost extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width:"100%",
+    width: "100%",
     alignItems: "center",
   },
   field: {
@@ -90,5 +99,9 @@ const styles = StyleSheet.create({
   text: {
     color: "#FFA400",
     textAlign: "center",
+  },
+  image: {
+    height: 300,
+    width: "90%",
   },
 });
