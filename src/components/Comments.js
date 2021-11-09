@@ -18,25 +18,28 @@ export default class Post extends Component {
     };
   } //Constructor
 
-  componentDidMount() {} //Component
   onComment() {
     const posteoActualizar = db.collection("posts").doc(this.props.postId);
 
-    posteoActualizar
-      .update({
-        comments: firebase.firestore.FieldValue.arrayUnion({
-          id: Date.now(),
-          email: auth.currentUser.email,
-          owner: auth.currentUser.displayName,
-          comment: this.state.comment,
-        }),
-      })
-      .then(() => {
-        this.setState({
-          comment: "",
+    if(this.state.comment == ""){
+        alert('Por favor, escribí un comentario.')
+    } else {
+        posteoActualizar.update({
+          comments: firebase.firestore.FieldValue.arrayUnion({
+            id: Date.now(),
+            email: auth.currentUser.email,
+            owner: auth.currentUser.displayName,
+            comment: this.state.comment,
+          }),
+        })
+        .then(() => {
+          this.setState({
+            comment: "",
+          });
         });
-      });
-  } //LIke
+    } // else
+  } // onComment
+
   render() {
     return (
       <View style={styles.modalView}>
@@ -60,14 +63,14 @@ export default class Post extends Component {
         />
         <TextInput
           keyboardType="default"
-          placeholder="¿Que quieres comentar?"
+          placeholder="Comentario..."
           multiline={true}
           numberOfLines={2}
           onChangeText={(text) => this.setState({ comment: text })}
           value={this.state.comment}
         />
         <TouchableOpacity style={styles.btn} onPress={() => this.onComment()}>
-          <Text>Submit</Text>
+          <Text>Comentar</Text>
         </TouchableOpacity>
       </View>
     );

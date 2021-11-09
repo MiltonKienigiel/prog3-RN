@@ -74,12 +74,21 @@ export default class Post extends Component {
       showModal: true,
     });
   } //Show modal
+
   closeModal() {
     console.log("chau modal");
     this.setState({
       showModal: false,
     });
   } //Show modal
+
+/*   viewComments() {
+      if (this.props.dataItem.data.comments.length = 0){
+          return "Aún no hay comentarios. Sé el primero en opinar."
+      } else {
+          {this.props.dataItem.data.comments}
+      }
+  } */
 
   render() {
     console.log(this.props.dataItem);
