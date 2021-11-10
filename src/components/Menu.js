@@ -61,8 +61,7 @@ export default class Menu extends Component {
   } //Register
 
   handleLogin(email, password) {
-    auth
-      .signInWithEmailAndPassword(email, password)
+    auth.signInWithEmailAndPassword(email, password)
       .then((response) => {
         console.log(response);
         alert("Iniciaste sesión.");
@@ -80,8 +79,7 @@ export default class Menu extends Component {
   } //Login
 
   handleLogout() {
-    auth
-      .signOut()
+    auth.signOut()
       .then(() => {
         this.setState({
           loggedIn: false,

@@ -42,6 +42,7 @@ export default class CreatePost extends Component {
         alert("No se pudo crear tu publicación.");
       });
   } // Handle post
+  
   savePhoto(url) {
     console.log("este es el url: ", url);
     this.setState({
@@ -49,6 +50,7 @@ export default class CreatePost extends Component {
       showCamera: false,
     });
   }
+
   render() {
     return (
       <View style={styles.container}>

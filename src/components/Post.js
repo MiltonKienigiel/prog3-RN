@@ -82,11 +82,11 @@ export default class Post extends Component {
     });
   } //Show modal
 
-/*   viewComments() {
+ /*  viewComments() {
       if (this.props.dataItem.data.comments.length = 0){
           return "Aún no hay comentarios. Sé el primero en opinar."
       } else {
-          {this.props.dataItem.data.comments}
+          return this.props.dataItem.data.comments
       }
   } */
 
@@ -104,11 +104,11 @@ export default class Post extends Component {
         <Text style={styles.text}>Likes: {this.state.likes}</Text>
         {!this.state.liked ? (
           <TouchableOpacity style={styles.btn} onPress={() => this.onLike()}>
-            <Text style={styles.text}>Like</Text>
+            <Text style={styles.text}>Me gusta :)</Text>
           </TouchableOpacity>
         ) : (
           <TouchableOpacity style={styles.btn} onPress={() => this.onDislike()}>
-            <Text style={styles.text}>Unlike</Text>
+            <Text style={styles.text}>Ya no me gusta :(</Text>
           </TouchableOpacity>
         )}
         <TouchableOpacity
@@ -117,7 +117,7 @@ export default class Post extends Component {
             this.showModal();
           }}
         >
-          <Text style={styles.text}>Ver comentarios</Text>
+          <Text style={styles.text}>Ver comentarios ({this.props.dataItem.data.comments.length})</Text>
         </TouchableOpacity>
         {this.state.showModal ? (
           <Modal
@@ -127,6 +127,7 @@ export default class Post extends Component {
             style={styles.modal}
           >
             <Comments
+              //comments={()=> this.viewComments()}
               comments={this.props.dataItem.data.comments}
               closeModal={() => this.closeModal()}
               postId={this.props.dataItem.id}
@@ -180,10 +181,10 @@ const styles = StyleSheet.create({
   },
   modalText: {
     fontWeight: "bold",
-    color: "#fff",
+    color: "#000",
   },
   modalView: {
-    backgroundColor: "green",
+    backgroundColor: "orange",
     borderRadius: 10,
   },
   modal: {

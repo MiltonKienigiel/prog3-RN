@@ -1,5 +1,5 @@
 import React, { Component }  from "react";
-import { Text, View, StyleSheet} from "react-native";
+import { Text, View, StyleSheet, ActivityIndicator} from "react-native";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import {auth, db} from '../firebase/config'
 import Post from '../components/Post'
@@ -27,6 +27,11 @@ export default class Home extends Component{
                 })
             }// docs
         ) //Snapshot
+
+        /* if (!this.props.loggedIn){
+            <ActivityIndicator size='large' color='orange'></ActivityIndicator>
+        } */ //Loader (no se como acceder a la prop loggedIn)
+
     } //Component
 
     render(){

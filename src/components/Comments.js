@@ -52,15 +52,18 @@ export default class Post extends Component {
         >
           <Text style={styles.modalText}>X</Text>
         </TouchableOpacity>
-        <FlatList
-          data={this.props.comments}
-          keyExtractor={(comment) => comment.id}
-          renderItem={({ item }) => (
-            <Text>
-              {item.owner}: {item.comment}
-            </Text>
-          )}
-        />
+        {this.props.comments.length != 0 ? (
+          <FlatList
+            data={this.props.comments}
+            keyExtractor={(comment) => comment.id}
+            renderItem={({ item }) => (
+              <Text>
+                {item.owner}: {item.comment}
+              </Text>
+            )}
+          /> ) : (
+          <Text>Aún no hay comentarios.</Text>
+        )}
         <TextInput
           keyboardType="default"
           placeholder="Comentario..."
@@ -70,7 +73,7 @@ export default class Post extends Component {
           value={this.state.comment}
         />
         <TouchableOpacity style={styles.btn} onPress={() => this.onComment()}>
-          <Text>Comentar</Text>
+          <Text style={styles.text}>Comentar</Text>
         </TouchableOpacity>
       </View>
     );
@@ -122,7 +125,7 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
   modalView: {
-    backgroundColor: "green",
+    backgroundColor: "orange",
     borderRadius: 10,
   },
   modal: {
