@@ -8,7 +8,8 @@ export default class Home extends Component{
     constructor (props){
         super(props);
         this.state = {
-            posts: []
+            posts: [],
+            loaderPost: true
         }
     } // Constructor
 
@@ -23,20 +24,22 @@ export default class Home extends Component{
                     })
                 }) // For each
                 this.setState({
-                    posts: postsAux
+                    posts: postsAux,
+                    loaderPost: false
                 })
             }// docs
         ) //Snapshot
-
-        /* if (!this.props.loggedIn){
-            <ActivityIndicator size='large' color='orange'></ActivityIndicator>
-        } */ //Loader (no se como acceder a la prop loggedIn)
 
     } //Component
 
     render(){
         return(
             <View style={styles.container}>
+                  {this.props.loader || this.state.loaderPost? (
+                      <ActivityIndicator size='large' color='blue'/>
+
+                  ): 
+                <>
                 <Text> ¡Hola {auth.currentUser.displayName}!</Text>
                 <FlatList
                     data = {this.state.posts}
@@ -44,6 +47,7 @@ export default class Home extends Component{
                     renderItem= {({item})=>
                         <Post dataItem = {item}></Post>}
                 /> 
+                </> }
             </View>
         )
     }

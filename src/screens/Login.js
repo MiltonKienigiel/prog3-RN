@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, TextInput, TouchableOpacity, View, StyleSheet} from 'react-native';
+import { Text, TextInput, TouchableOpacity, View, StyleSheet, ActivityIndicator} from 'react-native';
 import { auth } from '../firebase/config';
 import {NavigationContainer} from '@react-navigation/native'
 
@@ -10,7 +10,7 @@ export default class Login extends Component {
             email: "",
             password: "",
             loggedIn: false,
-            error: ""
+            error: "", 
         }
     }
 
@@ -27,6 +27,11 @@ export default class Login extends Component {
     render() {
         return (
             <View style={styles.container}>
+                {this.props.loader ? (
+                    <ActivityIndicator size= 'large' color = "blue"/>
+                    
+                ):
+            <>
                 <TextInput
                     style={styles.field}
                     keyboardType="email-address"
@@ -43,6 +48,8 @@ export default class Login extends Component {
                 <TouchableOpacity style = {styles.button} onPress={() => this.login()}>
                     <Text style = {styles.text}> Ingresar </Text>
                 </TouchableOpacity>
+            </>}
+                
             </View>
         )
     }

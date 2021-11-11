@@ -43,7 +43,7 @@ export default class Post extends Component {
   render() {
     return (
       <View style={styles.modalView}>
-        {/* Botón de cierre del modal */}
+        Botón de cierre del modal
         <TouchableOpacity
           style={styles.closeModal}
           onPress={() => {

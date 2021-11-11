@@ -127,7 +127,6 @@ export default class Post extends Component {
             style={styles.modal}
           >
             <Comments
-              //comments={()=> this.viewComments()}
               comments={this.props.dataItem.data.comments}
               closeModal={() => this.closeModal()}
               postId={this.props.dataItem.id}

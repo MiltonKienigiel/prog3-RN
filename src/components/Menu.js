@@ -15,6 +15,7 @@ export default class Menu extends Component {
     this.state = {
       loggedIn: false,
       error: null,
+      loader: true,
     };
   }
 
@@ -25,7 +26,10 @@ export default class Menu extends Component {
         this.setState({
           loggedIn: true,
         });
-      }
+      } //IF
+        this.setState({
+          loader:false
+        })
     });
   } //Component
 
@@ -100,7 +104,7 @@ export default class Menu extends Component {
         {this.state.loggedIn === true ? (
           <>
             <Drawer.Screen name="Home">
-              {(props) => <Home {...props} />}
+              {(props) => <Home {...props} loggedIn = {this.state.loggedIn} loader= {this.state.loader} />}
             </Drawer.Screen>
             <Drawer.Screen name="Crear publicación">
               {(props) => <CreatePost {...props} />}
@@ -123,6 +127,7 @@ export default class Menu extends Component {
                   handleLogin={(email, password) =>
                     this.handleLogin(email, password)
                   }
+                  loader= {this.state.loader}
                 />
               )}
             </Drawer.Screen>
