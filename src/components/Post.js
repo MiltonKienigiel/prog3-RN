@@ -82,14 +82,6 @@ export default class Post extends Component {
     });
   } //Show modal
 
- /*  viewComments() {
-      if (this.props.dataItem.data.comments.length = 0){
-          return "Aún no hay comentarios. Sé el primero en opinar."
-      } else {
-          return this.props.dataItem.data.comments
-      }
-  } */
-
   render() {
     console.log(this.props.dataItem);
     return (
@@ -111,6 +103,31 @@ export default class Post extends Component {
             <Text style={styles.text}>Ya no me gusta :(</Text>
           </TouchableOpacity>
         )}
+        
+        {this.state.showModal ? (
+          <>
+            <TouchableOpacity
+            style={styles.btn}
+            onPress={() => {
+              this.closeModal();
+            }}
+            >
+              <Text style={styles.text}>Ocultar comentarios ({this.props.dataItem.data.comments.length})</Text>
+            </TouchableOpacity>
+            <Modal
+              animationType="fade"
+              transparent={false}
+              visible={this.state.showModal}
+              style={styles.modal}
+            >
+              <Comments
+                comments={this.props.dataItem.data.comments}
+                closeModal={() => this.closeModal()}
+                postId={this.props.dataItem.id}
+              />
+            </Modal>
+          </>
+        ) : 
         <TouchableOpacity
           style={styles.btn}
           onPress={() => {
@@ -118,21 +135,7 @@ export default class Post extends Component {
           }}
         >
           <Text style={styles.text}>Ver comentarios ({this.props.dataItem.data.comments.length})</Text>
-        </TouchableOpacity>
-        {this.state.showModal ? (
-          <Modal
-            animationType="fade"
-            transparent={false}
-            visible={this.state.showModal}
-            style={styles.modal}
-          >
-            <Comments
-              comments={this.props.dataItem.data.comments}
-              closeModal={() => this.closeModal()}
-              postId={this.props.dataItem.id}
-            />
-          </Modal>
-        ) : null}
+        </TouchableOpacity> }
       </View>
     );
   } //Render

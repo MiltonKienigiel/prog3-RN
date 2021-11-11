@@ -43,15 +43,14 @@ export default class Post extends Component {
   render() {
     return (
       <View style={styles.modalView}>
-        Botón de cierre del modal
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={styles.closeModal}
           onPress={() => {
             this.props.closeModal();
           }}
         >
           <Text style={styles.modalText}>X</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         {this.props.comments.length != 0 ? (
           <FlatList
             data={this.props.comments}
