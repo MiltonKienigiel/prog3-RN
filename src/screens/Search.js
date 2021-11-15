@@ -4,13 +4,14 @@ import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import {auth, db} from '../firebase/config'
 import Post from '../components/Post'
 
-export default class Home extends Component{
+export default class Search extends Component{
     constructor (props){
         super(props);
         this.state = {
             posts: [],
             loaderPost: true,
-            searchInput: ""
+            searchInput: "",
+            users: []
         }
     } // Constructor
 
@@ -30,14 +31,30 @@ export default class Home extends Component{
                 })
             }// docs
         ) //Snapshot
+        db.collection('users').onSnapshot(
+            docs=> {
+                let usersAux= []
+                docs.forEach (doc =>{
+                    usersAux.push({
+                        data: doc.data()
+                    })
+                }) // For each
+                this.setState({
+                    users: usersAux,
+                    loaderPost: false
+                })
+            }// docs
+        ) //Snapshot
     } //Component
 
     render(){
         let filteredPosts = this.state.searchInput.length > 0
             ? this.state.posts.filter(element => element.data.owner.includes(this.state.searchInput)) 
             : this.state.posts
-
         
+        let filteredUsers = this.state.searchInput.length > 0
+            ? this.state.users.filter(element =>  element.data.username.includes(this.state.searchInput))
+            : this.state.users
 
         return(
             <View style={styles.container}>
@@ -52,17 +69,22 @@ export default class Home extends Component{
                     placeholder="Buscar usuario..."
                     onChangeText={text => this.setState({searchInput: text})}
                 />
-                {filteredPosts.length > 0 ?
+                {filteredUsers.length > 0 ?
+
+                    filteredPosts.length > 0 ?
+                        
+                        <FlatList
+                            data = {filteredPosts}
+                            keyExtractor = {post => post.id.toString()}
+                            renderItem= {({item})=>
+                                <Post dataItem = {item}></Post>}
+                        />:
+                        <Text>Lo siento, este usuario aun no hizo un posteo</Text>
                     
-                    <FlatList
-                        data = {filteredPosts}
-                        keyExtractor = {post => post.id.toString()}
-                        renderItem= {({item})=>
-                            <Post dataItem = {item}></Post>}
-                    />:
-                    <Text>Lo siento, prueba con otro usuario</Text>
-                
-                }
+                    : 
+                    <Text> Ese usuario no existe</Text>
+                    
+                } 
                 </> }
             </View>
         )

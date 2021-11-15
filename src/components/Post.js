@@ -83,7 +83,6 @@ export default class Post extends Component {
   } //Show modal
 
   render() {
-    console.log(this.props.dataItem);
     return (
       <View style={styles.container}>
         <Image

@@ -6,6 +6,7 @@ import Home from "../screens/Home";
 import Login from "../screens/Login";
 import Register from "../screens/Register";
 import CreatePost from "../screens/CreatePost";
+import Search from "../screens/Search"
 import MyProfile from "../screens/MyProfile";
 import { auth, db } from "../firebase/config";
 
@@ -116,6 +117,9 @@ export default class Menu extends Component {
                   handleLogout={() => this.handleLogout()}
                 />
               )}
+            </Drawer.Screen>
+            <Drawer.Screen name="Buscar Posteos">
+              {(props) => <Search {...props} loggedIn = {this.state.loggedIn} loader= {this.state.loader} />}
             </Drawer.Screen>
           </>
         ) : (
