@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { auth, db } from "../firebase/config";
 import firebase from "firebase";
+import { createNativeWrapper } from "react-native-gesture-handler";
 
 export default class Post extends Component {
   constructor(props) {
@@ -40,14 +41,28 @@ export default class Post extends Component {
     } // else
   } // onComment
 
-  /* deleteComment(){
+  deleteComment(){
+
+    console.log(this.props.comments)
+
     const posteoActualizar = db.collection("posts").doc(this.props.postId);
 
-    if(auth.currentUser.displayName == comments.displayName){
-        posteoActualizar.filter(element => element.ow == )
-    }
-    console.log(comments)
-  } // onComment */
+    posteoActualizar
+      .update({
+        comments: firebase.firestore.FieldValue.arrayRemove({
+          id: this.props.comments.id,
+          email: this.props.comments.email,
+          owner: this.props.comments.owner,
+          comment: this.props.comments.comment,
+        }),
+      })
+      .then(() => {
+        this.setState({
+          comment: ""
+        });
+      });
+   
+  } // onComment
 
   render() {
     return (

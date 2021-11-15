@@ -36,7 +36,7 @@ export default class Home extends Component{
         let filteredPosts = this.state.searchInput.length > 0
             ? this.state.posts.filter(element => element.data.owner.includes(this.state.searchInput)) 
             : this.state.posts
-
+        
         
 
         return(
