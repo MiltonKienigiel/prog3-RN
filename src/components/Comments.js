@@ -40,25 +40,36 @@ export default class Post extends Component {
     } // else
   } // onComment
 
+  /* deleteComment(){
+    const posteoActualizar = db.collection("posts").doc(this.props.postId);
+
+    if(auth.currentUser.displayName == comments.displayName){
+        posteoActualizar.filter(element => element.ow == )
+    }
+    console.log(comments)
+  } // onComment */
+
   render() {
     return (
       <View style={styles.modalView}>
-        {/* <TouchableOpacity
-          style={styles.closeModal}
-          onPress={() => {
-            this.props.closeModal();
-          }}
-        >
-          <Text style={styles.modalText}>X</Text>
-        </TouchableOpacity> */}
         {this.props.comments.length != 0 ? (
           <FlatList
             data={this.props.comments}
             keyExtractor={(comment) => comment.id}
             renderItem={({ item }) => (
-              <Text>
-                {item.owner}: {item.comment}
-              </Text>
+              <>
+                <Text>
+                  {item.owner}: {item.comment}
+                </Text>
+                <TouchableOpacity
+                  style={styles.closeModal}
+                  onPress={() => {
+                    this.deleteComment();
+                  }}
+                >
+                  <Text style={styles.modalText}>X</Text>
+                </TouchableOpacity>
+              </>
             )}
           /> ) : (
           <Text>Aún no hay comentarios.</Text>

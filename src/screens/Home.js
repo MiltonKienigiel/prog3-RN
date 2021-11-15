@@ -1,5 +1,5 @@
 import React, { Component }  from "react";
-import { Text, View, StyleSheet, ActivityIndicator} from "react-native";
+import { Text, View, StyleSheet, ActivityIndicator, TextInput} from "react-native";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import {auth, db} from '../firebase/config'
 import Post from '../components/Post'
@@ -9,7 +9,8 @@ export default class Home extends Component{
         super(props);
         this.state = {
             posts: [],
-            loaderPost: true
+            loaderPost: true,
+            searchInput: ""
         }
     } // Constructor
 
@@ -29,20 +30,28 @@ export default class Home extends Component{
                 })
             }// docs
         ) //Snapshot
-
     } //Component
 
     render(){
+        let filteredPosts = this.state.searchInput.length > 0
+        ? this.state.posts.filter(element => element.data.owner.includes(this.state.searchInput)) 
+        : this.state.posts
+
         return(
             <View style={styles.container}>
                   {this.props.loader || this.state.loaderPost? (
                       <ActivityIndicator size='large' color='blue'/>
-
                   ): 
                 <>
                 <Text> ¡Hola {auth.currentUser.displayName}!</Text>
+                <TextInput
+                    style={styles.field}
+                    keyboardType="default"
+                    placeholder="Buscar usuario..."
+                    onChangeText={text => this.setState({searchInput: text})}
+                />
                 <FlatList
-                    data = {this.state.posts}
+                    data = {filteredPosts}
                     keyExtractor = {post => post.id.toString()}
                     renderItem= {({item})=>
                         <Post dataItem = {item}></Post>}
@@ -60,5 +69,12 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         backgroundImage: 'linear-gradient(45deg, #FBDA61 0%, #FF5ACD 100%)',
-    }
+    },
+    field: {
+        width: '80%',
+        backgroundColor: "#09009B",
+        color: '#FFA400',
+        padding: 10,
+        marginVertical: 10
+    },
 })
