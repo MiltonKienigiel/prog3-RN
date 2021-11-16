@@ -11,6 +11,7 @@ import {
 import { auth, db } from "../firebase/config";
 import firebase from "firebase";
 import Comments from "../components/Comments";
+import { AutoFocus } from "expo-camera/build/Camera.types";
 export default class Post extends Component {
   constructor(props) {
     super(props);
@@ -167,10 +168,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   btn: {
-    backgroundColor: "red",
+    backgroundColor: "#ff1f5a",
     padding: 7,
     marginTop: 5,
-    borderRadius: 15,
+    borderRadius: 10,
+    width:"80%",
+    margin:"auto",
   },
   closeModal: {
     alignSelf: "flex-end",

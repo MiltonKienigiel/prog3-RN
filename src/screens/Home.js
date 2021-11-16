@@ -45,7 +45,7 @@ export default class Home extends Component{
                       <ActivityIndicator size='large' color='blue'/>
                   ): 
                 <>
-                <Text> ¡Hola {auth.currentUser.displayName}!</Text>
+                <Text style={styles.text}> ¡Hola {auth.currentUser.displayName}!</Text>
                 <TextInput
                     style={styles.field}
                     keyboardType="default"
@@ -75,13 +75,20 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        backgroundImage: 'linear-gradient(45deg, #FBDA61 0%, #FF5ACD 100%)',
+        backgroundColor: "#1e2a78",
+        color:"#ff9f68"
+        // backgroundImage: 'linear-gradient(45deg, #FBDA61 0%, #FF5ACD 100%)',
     },
     field: {
         width: '80%',
-        backgroundColor: "#09009B",
+        backgroundColor: "#f9ff21",
         color: '#FFA400',
         padding: 10,
-        marginVertical: 10
+        marginVertical: 10,
+        borderRadius:10
     },
+    text:{
+        paddingTop:10,
+        color:"#ffd615"
+    }
 })

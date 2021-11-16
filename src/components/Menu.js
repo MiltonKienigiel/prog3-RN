@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import Home from "../screens/Home";
 import Login from "../screens/Login";
 import Register from "../screens/Register";
@@ -98,17 +100,45 @@ export default class Menu extends Component {
   } //Logout
 
   render() {
-    const Drawer = createDrawerNavigator();
+    const Drawer = createBottomTabNavigator();
 
     return (
-      <Drawer.Navigator initialRouteName="Login">
+      <Drawer.Navigator  initialRouteName="Login" screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === 'Home') {
+            iconName = focused
+              ? 'home'
+              : 'home-outline';
+          } else if (route.name === 'Publicar') {
+            iconName = focused ? 'add-circle' : 'add-circle-outline';
+          } else if (route.name === 'Buscar Posteos') {
+            iconName = focused ? 'search' : 'search-outline';
+          } else if (route.name === 'Mi perfil') {
+            iconName = focused ? 'person' : 'person-outline';
+          } else if (route.name === 'Registrarme') {
+            iconName = focused ? 'person-add' : 'person-add-outline';
+          }else if (route.name === 'Iniciar sesión') {
+            iconName = focused ? 'log-in' : 'log-in-outline';
+          }
+
+          // You can return any component that you like here!
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: 'black',
+        tabBarInactiveTintColor: 'gray',
+      })}>
         {this.state.loggedIn === true ? (
           <>
             <Drawer.Screen name="Home">
               {(props) => <Home {...props} loggedIn = {this.state.loggedIn} loader= {this.state.loader} />}
             </Drawer.Screen>
-            <Drawer.Screen name="Crear publicación">
+            <Drawer.Screen name="Publicar">
               {(props) => <CreatePost {...props} />}
+            </Drawer.Screen>
+            <Drawer.Screen name="Buscar Posteos">
+              {(props) => <Search {...props} loggedIn = {this.state.loggedIn} loader= {this.state.loader} />}
             </Drawer.Screen>
             <Drawer.Screen name="Mi perfil">
               {(props) => (
@@ -117,9 +147,6 @@ export default class Menu extends Component {
                   handleLogout={() => this.handleLogout()}
                 />
               )}
-            </Drawer.Screen>
-            <Drawer.Screen name="Buscar Posteos">
-              {(props) => <Search {...props} loggedIn = {this.state.loggedIn} loader= {this.state.loader} />}
             </Drawer.Screen>
           </>
         ) : (
@@ -159,4 +186,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  tabBar:{
+    backgroundColor:"#ff1f5a"
+  }
 });
