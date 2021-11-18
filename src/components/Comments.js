@@ -41,29 +41,6 @@ export default class Post extends Component {
     } // else
   } // onComment
 
-  deleteComment(){
-
-    console.log(this.props.comments)
-
-    const posteoActualizar = db.collection("posts").doc(this.props.postId);
-
-    posteoActualizar
-      .update({
-        comments: firebase.firestore.FieldValue.arrayRemove({
-          id: this.props.comments.id,
-          email: this.props.comments.email,
-          owner: this.props.comments.owner,
-          comment: this.props.comments.comment,
-        }),
-      })
-      .then(() => {
-        this.setState({
-          comment: ""
-        });
-      });
-   
-  } // onComment
-
   render() {
     return (
       <View style={styles.modalView}>
@@ -76,14 +53,17 @@ export default class Post extends Component {
                 <Text>
                   {item.owner}: {item.comment}
                 </Text>
-                <TouchableOpacity
-                  style={styles.closeModal}
-                  onPress={() => {
-                    this.deleteComment();
+                {item.owner == auth.currentUser.displayName
+                ? <TouchableOpacity
+                    style={styles.closeModal}
+                    onPress={() => {
+                      this.props.deleteComment(item.id);
                   }}
                 >
                   <Text style={styles.modalText}>X</Text>
                 </TouchableOpacity>
+                : null
+            }
               </>
             )}
           /> ) : (

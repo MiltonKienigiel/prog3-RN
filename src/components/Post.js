@@ -21,6 +21,7 @@ export default class Post extends Component {
       liked: false,
       likes: 0,
       showModal: false,
+      filteredComments: this.props.dataItem.data.comments,
     };
   } //Constructor
 
@@ -72,18 +73,30 @@ export default class Post extends Component {
   } // Dislike
 
   showModal() {
-    console.log("Mostrando modal");
     this.setState({
       showModal: true,
     });
   } //Show modal
 
   closeModal() {
-    console.log("chau modal");
     this.setState({
       showModal: false,
     });
   } //Show modal
+
+  deleteComment(deletedCommentId){
+
+    let filteredComments = this.props.dataItem.data.comments.filter(element => element.id != deletedCommentId)
+    this.setState({
+      filteredComments: filteredComments
+    })
+
+    const posteoActualizar = db.collection("posts").doc(this.props.dataItem.id);
+
+    posteoActualizar.update({
+        comments: filteredComments
+      })
+    }
 
   render() {
     return (
@@ -137,6 +150,8 @@ export default class Post extends Component {
                 comments={this.props.dataItem.data.comments}
                 closeModal={() => this.closeModal()}
                 postId={this.props.dataItem.id}
+                deleteComment={(deletedCommentId) => this.deleteComment(deletedCommentId)}
+                filteredComments={this.state.filteredComments}
               />
             </Modal>
           </>
