@@ -8,6 +8,8 @@ import {
   Modal,
   FlatList,
 } from "react-native";
+import Ionicons from "react-native-vector-icons/Ionicons";
+
 import { auth, db } from "../firebase/config";
 import firebase from "firebase";
 import Comments from "../components/Comments";
@@ -86,6 +88,15 @@ export default class Post extends Component {
   render() {
     return (
       <View style={styles.container}>
+        {this.props.dataItem.data.owner == auth.currentUser.displayName ? (
+          <TouchableOpacity
+            onPress={() =>
+              this.props.deletePost(this.props.dataItem.data.createdAt)
+            }
+          >
+            <Ionicons name="trash" size="20px" color="red" />
+          </TouchableOpacity>
+        ) : null}
         <Image
           style={styles.image}
           source={{ uri: this.props.dataItem.data.photo }}
@@ -103,16 +114,18 @@ export default class Post extends Component {
             <Text style={styles.text}>Ya no me gusta :(</Text>
           </TouchableOpacity>
         )}
-        
+
         {this.state.showModal ? (
           <>
             <TouchableOpacity
-            style={styles.btn}
-            onPress={() => {
-              this.closeModal();
-            }}
+              style={styles.btn}
+              onPress={() => {
+                this.closeModal();
+              }}
             >
-              <Text style={styles.text}>Ocultar comentarios ({this.props.dataItem.data.comments.length})</Text>
+              <Text style={styles.text}>
+                Ocultar comentarios ({this.props.dataItem.data.comments.length})
+              </Text>
             </TouchableOpacity>
             <Modal
               animationType="fade"
@@ -127,15 +140,18 @@ export default class Post extends Component {
               />
             </Modal>
           </>
-        ) : 
-        <TouchableOpacity
-          style={styles.btn}
-          onPress={() => {
-            this.showModal();
-          }}
-        >
-          <Text style={styles.text}>Ver comentarios ({this.props.dataItem.data.comments.length})</Text>
-        </TouchableOpacity> }
+        ) : (
+          <TouchableOpacity
+            style={styles.btn}
+            onPress={() => {
+              this.showModal();
+            }}
+          >
+            <Text style={styles.text}>
+              Ver comentarios ({this.props.dataItem.data.comments.length})
+            </Text>
+          </TouchableOpacity>
+        )}
       </View>
     );
   } //Render
@@ -172,8 +188,8 @@ const styles = StyleSheet.create({
     padding: 7,
     marginTop: 5,
     borderRadius: 10,
-    width:"80%",
-    margin:"auto",
+    width: "80%",
+    margin: "auto",
   },
   closeModal: {
     alignSelf: "flex-end",

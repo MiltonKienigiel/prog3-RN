@@ -1,94 +1,110 @@
-import React, { Component }  from "react";
-import { Text, View, StyleSheet, ActivityIndicator, TextInput} from "react-native";
+import React, { Component } from "react";
+import {
+  Text,
+  View,
+  StyleSheet,
+  ActivityIndicator,
+  TextInput,
+} from "react-native";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
-import {auth, db} from '../firebase/config'
-import Post from '../components/Post'
+import { auth, db } from "../firebase/config";
+import Post from "../components/Post";
 
-export default class Home extends Component{
-    constructor (props){
-        super(props);
-        this.state = {
-            posts: [],
-            loaderPost: true,
-            searchInput: ""
-        }
-    } // Constructor
+export default class Home extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      posts: [],
+      loaderPost: true,
+    };
+  } // Constructor
 
-    componentDidMount(){
-        db.collection('posts').orderBy('createdAt', 'desc').onSnapshot(
-            docs=> {
-                let postsAux= []
-                docs.forEach (doc =>{
-                    postsAux.push({
-                        id: doc.id,
-                        data: doc.data()
-                    })
-                }) // For each
-                this.setState({
-                    posts: postsAux,
-                    loaderPost: false
-                })
-            }// docs
-        ) //Snapshot
-    } //Component
+  componentDidMount() {
+    db.collection("posts")
+      .orderBy("createdAt", "desc")
+      .onSnapshot(
+        (docs) => {
+          let postsAux = [];
+          docs.forEach((doc) => {
+            postsAux.push({
+              id: doc.id,
+              data: doc.data(),
+            });
+          }); // For each
+          this.setState({
+            posts: postsAux,
+            loaderPost: false,
+          });
+        } // docs
+      ); //Snapshot
+  } //Component
 
-    render(){
-        let filteredPosts = this.state.searchInput.length > 0
-            ? this.state.posts.filter(element => element.data.owner.includes(this.state.searchInput)) 
-            : this.state.posts
-        
-        
+  deletePost(param) {
+    db.collection("posts")
+      .where("createdAt", "==", param)
+      .get()
+      .then((data) => {
+        data.forEach((doc) => doc.ref.delete());
+        const postsFiltered = this.state.posts.filter(
+          (post) => post.createdAt != param
+        );
+        this.setState({ posts: postsFiltered });
+      });
+  }
 
-        return(
-            <View style={styles.container}>
-                  {this.props.loader || this.state.loaderPost? (
-                      <ActivityIndicator size='large' color='blue'/>
-                  ): 
-                <>
-                <Text style={styles.text}> ¡Hola {auth.currentUser.displayName}!</Text>
-                <TextInput
-                    style={styles.field}
-                    keyboardType="default"
-                    placeholder="Buscar usuario..."
-                    onChangeText={text => this.setState({searchInput: text})}
-                />
-                {filteredPosts.length > 0 ?
-                    
-                    <FlatList
-                        data = {filteredPosts}
-                        keyExtractor = {post => post.id.toString()}
-                        renderItem= {({item})=>
-                            <Post dataItem = {item}></Post>}
-                    />:
-                    <Text>Lo siento, prueba con otro usuario</Text>
-                
-                }
-                </> }
-            </View>
-        )
-    }
+  render() {
+    return (
+      <View style={styles.container}>
+        {this.props.loader || this.state.loaderPost ? (
+          <ActivityIndicator size="large" color="blue" />
+        ) : (
+          <>
+            <Text style={styles.text}>
+              ¡Hola {auth.currentUser.displayName}!
+            </Text>
+            <FlatList
+              showsHorizontalScrollIndicator={false}
+              style={styles.flatlist}
+              data={this.state.posts}
+              keyExtractor={(post) => post.id.toString()}
+              renderItem={({ item }) => (
+                <Post
+                  dataItem={item}
+                  deletePost={(createdAt) => this.deletePost(createdAt)}
+                ></Post>
+              )}
+            />
+          </>
+        )}
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#1e2a78",
-        color:"#ff9f68"
-        // backgroundImage: 'linear-gradient(45deg, #FBDA61 0%, #FF5ACD 100%)',
-    },
-    field: {
-        width: '80%',
-        backgroundColor: "#f9ff21",
-        color: '#FFA400',
-        padding: 10,
-        marginVertical: 10,
-        borderRadius:10
-    },
-    text:{
-        paddingTop:10,
-        color:"#ffd615"
-    }
-})
+  container: {
+    overflow: "hidden",
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#1e2a78",
+    color: "#ff9f68",
+    // backgroundImage: 'linear-gradient(45deg, #FBDA61 0%, #FF5ACD 100%)',
+  },
+  field: {
+    width: "80%",
+    backgroundColor: "#f9ff21",
+    color: "#FFA400",
+    padding: 10,
+    marginVertical: 10,
+    borderRadius: 10,
+  },
+  text: {
+    paddingTop: 10,
+    color: "#ffd615",
+  },
+  flatlist: {
+    width: "100%",
+  },
+});
