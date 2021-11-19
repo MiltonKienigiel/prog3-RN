@@ -10,6 +10,7 @@ import {
 import { auth, db } from "../firebase/config";
 import firebase from "firebase";
 import { createNativeWrapper } from "react-native-gesture-handler";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 export default class Post extends Component {
   constructor(props) {
@@ -22,10 +23,11 @@ export default class Post extends Component {
   onComment() {
     const posteoActualizar = db.collection("posts").doc(this.props.postId);
 
-    if(this.state.comment == ""){
-        alert('Por favor, escribí un comentario.')
+    if (this.state.comment == "") {
+      alert("Por favor, escribí un comentario.");
     } else {
-        posteoActualizar.update({
+      posteoActualizar
+        .update({
           comments: firebase.firestore.FieldValue.arrayUnion({
             id: Date.now(),
             email: auth.currentUser.email,
@@ -50,23 +52,23 @@ export default class Post extends Component {
             keyExtractor={(comment) => comment.id}
             renderItem={({ item }) => (
               <>
-                <Text>
+                <Text style={styles.comment}>
                   {item.owner}: {item.comment}
                 </Text>
-                {item.owner == auth.currentUser.displayName
-                ? <TouchableOpacity
+                {item.owner == auth.currentUser.displayName ? (
+                  <TouchableOpacity
                     style={styles.closeModal}
                     onPress={() => {
                       this.props.deleteComment(item.id);
-                  }}
-                >
-                  <Text style={styles.modalText}>X</Text>
-                </TouchableOpacity>
-                : null
-            }
+                    }}
+                  >
+                    <Ionicons name="trash" size="15px" color="red" />
+                  </TouchableOpacity>
+                ) : null}
               </>
             )}
-          /> ) : (
+          />
+        ) : (
           <Text>Aún no hay comentarios.</Text>
         )}
         <TextInput
@@ -91,7 +93,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    width: "60%",
+    width: "100%",
     justifyContent: "center",
     padding: 10,
     margin: "auto",
@@ -107,6 +109,9 @@ const styles = StyleSheet.create({
     elevation: 5,
     backgroundColor: "rgba(0, 0, 0, 0.247)",
   },
+  comment:{
+    padding:"5px"
+  },
   text: {
     color: "white",
     textAlign: "center",
@@ -120,7 +125,6 @@ const styles = StyleSheet.create({
   closeModal: {
     alignSelf: "flex-end",
     padding: 10,
-    backgroundColor: "#dc3545",
     marginTop: 2,
     marginBotom: 10,
     borderRadius: 4,
@@ -132,6 +136,7 @@ const styles = StyleSheet.create({
   modalView: {
     backgroundColor: "orange",
     borderRadius: 10,
+    width:"100%"
   },
   modal: {
     border: "none",

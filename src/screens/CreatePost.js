@@ -19,13 +19,23 @@ export default class CreatePost extends Component {
       showCamera: true,
     };
   } // Constructor
+  formatDate(date) {
+    var d = new Date(date),
+      month = "" + (d.getMonth() + 1),
+      day = "" + d.getDate(),
+      year = d.getFullYear();
 
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+
+    return [year, month, day].join("-");
+  }
   handlePost() {
     db.collection("posts")
       .add({
         owner: auth.currentUser.displayName,
         description: this.state.comment,
-        createdAt: Date.now(),
+        createdAt: this.formatDate(Date.now()),
         likes: [],
         comments: [],
         photo: this.state.photo,
@@ -42,7 +52,7 @@ export default class CreatePost extends Component {
         alert("No se pudo crear tu publicación.");
       });
   } // Handle post
-  
+
   savePhoto(url) {
     console.log("este es el url: ", url);
     this.setState({
