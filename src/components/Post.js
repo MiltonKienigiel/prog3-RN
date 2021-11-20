@@ -116,10 +116,8 @@ export default class Post extends Component {
           style={styles.image}
           source={{ uri: this.props.dataItem.data.photo }}
         />
-        <Text style={styles.text}>
-          {this.props.dataItem.data.description}
-          {this.props.dataItem.data.createdAt}
-        </Text>
+        <Text style={styles.text}>{this.props.dataItem.data.description}</Text>
+        <Text style={styles.text}>{this.props.dataItem.data.createdAt}</Text>
         <Text style={styles.textLike}>
           Likes: {this.state.likes}
           {!this.state.liked ? (

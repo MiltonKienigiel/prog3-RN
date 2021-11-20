@@ -32,17 +32,9 @@ export default class Home extends Component {
       ); //Snapshot
   } //Component
 
-  verData() {
-    console.log(auth.currentUser);
-    console.log(this.state.posts);
-  }
-
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity style={styles.button} onPress={() => this.verData()}>
-          <Text style={styles.text}> ver data en consola </Text>
-        </TouchableOpacity>
         <Text>Usuario: {auth.currentUser.displayName}</Text>
         <Text>E-mail: {auth.currentUser.email}</Text>
         <Text>
