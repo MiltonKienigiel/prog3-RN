@@ -68,7 +68,7 @@ export default class Home extends Component {
 
 const styles = StyleSheet.create({
   field: {
-    width: "80%",
+    width: "90%",
     backgroundColor: "#09009B",
     color: "#FFA400",
     padding: 10,
@@ -86,22 +86,16 @@ const styles = StyleSheet.create({
     height: 200,
   },
   container: {
-    flex: 1,
-    width: "60%",
-    justifyContent: "center",
-    padding: 10,
-    margin: "auto",
-    marginTop: 15,
-    borderRadius: 15,
-    shadowColor: "black",
-    shadowOffset: {
-      width: 0,
-      height: 2,
+    container: {
+      overflow: "hidden",
+      flex: 1,
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: "#1e2a78",
+      color: "#ff9f68",
+      // backgroundImage: 'linear-gradient(45deg, #FBDA61 0%, #FF5ACD 100%)',
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-    backgroundColor: "rgba(0, 0, 0, 0.247)",
   },
   text: {
     color: "white",

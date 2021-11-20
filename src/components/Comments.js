@@ -53,34 +53,36 @@ export default class Post extends Component {
             renderItem={({ item }) => (
               <>
                 <Text style={styles.comment}>
-                  {item.owner}: {item.comment}
+                  <Text style={styles.commentBold}>{item.owner}</Text>
+                  {item.comment}
+                  {item.owner == auth.currentUser.displayName ? (
+                    <TouchableOpacity
+                      style={styles.closeModal}
+                      onPress={() => {
+                        this.props.deleteComment(item.id);
+                      }}
+                    >
+                      <Ionicons name="trash" size="15px" color="red" />
+                    </TouchableOpacity>
+                  ) : null}
                 </Text>
-                {item.owner == auth.currentUser.displayName ? (
-                  <TouchableOpacity
-                    style={styles.closeModal}
-                    onPress={() => {
-                      this.props.deleteComment(item.id);
-                    }}
-                  >
-                    <Ionicons name="trash" size="15px" color="red" />
-                  </TouchableOpacity>
-                ) : null}
               </>
             )}
           />
         ) : (
-          <Text>Aún no hay comentarios.</Text>
+          <Text style={styles.comment}>Aún no hay comentarios.</Text>
         )}
         <TextInput
+          style={styles.input}
           keyboardType="default"
-          placeholder="Comentario..."
+          placeholder="Esribe un comentario..."
           multiline={true}
           numberOfLines={2}
           onChangeText={(text) => this.setState({ comment: text })}
           value={this.state.comment}
         />
         <TouchableOpacity style={styles.btn} onPress={() => this.onComment()}>
-          <Text style={styles.text}>Comentar</Text>
+          <Text style={styles.textBtn}>Comentar</Text>
         </TouchableOpacity>
       </View>
     );
@@ -109,15 +111,29 @@ const styles = StyleSheet.create({
     elevation: 5,
     backgroundColor: "rgba(0, 0, 0, 0.247)",
   },
-  comment:{
-    padding:"5px"
+  input: {
+    color: "grey",
+  },
+  comment: {
+    padding: "5px",
+    color: "white",
+  },
+  commentBold: {
+    padding: "5px",
+    color: "white",
+    fontWeight: "bolder",
   },
   text: {
     color: "white",
     textAlign: "center",
   },
+  textBtn: {
+    color: "black",
+    textAlign: "center",
+  },
   btn: {
-    backgroundColor: "red",
+    backgroundColor: "#f9ff21",
+    color: "black",
     padding: 7,
     marginTop: 5,
     borderRadius: 15,
@@ -134,9 +150,9 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
   modalView: {
-    backgroundColor: "orange",
+    color: "white",
     borderRadius: 10,
-    width:"100%"
+    width: "100%",
   },
   modal: {
     border: "none",

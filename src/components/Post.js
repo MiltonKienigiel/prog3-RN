@@ -27,7 +27,7 @@ export default class Post extends Component {
 
   componentDidMount() {
     if (this.props.dataItem) {
-      if (this.props.dataItem.data.likes.lenght !== 0) {
+      if (this.props.dataItem.data.likes.length !== 0) {
         this.setState({
           likes: this.props.dataItem.data.likes.length,
         });
@@ -84,19 +84,20 @@ export default class Post extends Component {
     });
   } //Show modal
 
-  deleteComment(deletedCommentId){
-
-    let filteredComments = this.props.dataItem.data.comments.filter(element => element.id != deletedCommentId)
+  deleteComment(deletedCommentId) {
+    let filteredComments = this.props.dataItem.data.comments.filter(
+      (element) => element.id != deletedCommentId
+    );
     this.setState({
-      filteredComments: filteredComments
-    })
+      filteredComments: filteredComments,
+    });
 
     const posteoActualizar = db.collection("posts").doc(this.props.dataItem.id);
 
     posteoActualizar.update({
-        comments: filteredComments
-      })
-    }
+      comments: filteredComments,
+    });
+  }
 
   render() {
     return (
@@ -110,22 +111,36 @@ export default class Post extends Component {
             <Ionicons name="trash" size="20px" color="red" />
           </TouchableOpacity>
         ) : null}
-          <Text style={styles.textLeft}>{this.props.dataItem.data.owner}</Text>
+        <Text style={styles.textLeft}>{this.props.dataItem.data.owner}</Text>
         <Image
           style={styles.image}
           source={{ uri: this.props.dataItem.data.photo }}
         />
-        <Text style={styles.text}>{this.props.dataItem.data.description} {this.props.dataItem.data.createdAt}</Text>
-        <Text style={styles.textLike}>Likes: {this.state.likes}
-        {!this.state.liked ? (
-          <TouchableOpacity  onPress={() => this.onLike()}>
-             <Ionicons style={styles.heartIcon} name="heart-outline" size="20px" color="red" />
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity onPress={() => this.onDislike()}>
-             <Ionicons style={styles.heartIcon} name="heart" size="20px" color="red" />
-          </TouchableOpacity>
-        )}
+        <Text style={styles.text}>
+          {this.props.dataItem.data.description}
+          {this.props.dataItem.data.createdAt}
+        </Text>
+        <Text style={styles.textLike}>
+          Likes: {this.state.likes}
+          {!this.state.liked ? (
+            <TouchableOpacity onPress={() => this.onLike()}>
+              <Ionicons
+                style={styles.heartIcon}
+                name="heart-outline"
+                size="20px"
+                color="red"
+              />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity onPress={() => this.onDislike()}>
+              <Ionicons
+                style={styles.heartIcon}
+                name="heart"
+                size="20px"
+                color="red"
+              />
+            </TouchableOpacity>
+          )}
         </Text>
 
         {this.state.showModal ? (
@@ -150,7 +165,9 @@ export default class Post extends Component {
                 comments={this.props.dataItem.data.comments}
                 closeModal={() => this.closeModal()}
                 postId={this.props.dataItem.id}
-                deleteComment={(deletedCommentId) => this.deleteComment(deletedCommentId)}
+                deleteComment={(deletedCommentId) =>
+                  this.deleteComment(deletedCommentId)
+                }
                 filteredComments={this.state.filteredComments}
               />
             </Modal>
@@ -175,10 +192,9 @@ export default class Post extends Component {
 const styles = StyleSheet.create({
   image: {
     height: 200,
-    borderRadius:"12px"
+    borderRadius: "12px",
   },
-  heartIcon:{
-  },
+  heartIcon: {},
   container: {
     flex: 1,
     width: "90%",
@@ -200,21 +216,20 @@ const styles = StyleSheet.create({
   text: {
     color: "white",
     textAlign: "center",
-    padding:"5px"
+    padding: "5px",
   },
-  textLike:{
+  textLike: {
     color: "white",
     textAlign: "center",
-    padding:"5px",
-    
+    padding: "5px",
   },
-  heartIcon:{
-    paddingLeft:"10px"
+  heartIcon: {
+    paddingLeft: "10px",
   },
-  textLeft:{
-    textAlign:"left",
-    color:"white",
-    paddingBottom:"10px"
+  textLeft: {
+    textAlign: "left",
+    color: "white",
+    paddingBottom: "10px",
   },
   btn: {
     backgroundColor: "#ff1f5a",
@@ -242,7 +257,7 @@ const styles = StyleSheet.create({
   },
   modal: {
     border: "none",
-    width:"100%",
-    marginTop:"10px"
+    width: "100%",
+    marginTop: "10px",
   },
 }); //Styles
