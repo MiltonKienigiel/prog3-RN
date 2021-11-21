@@ -98,16 +98,14 @@ export default class Post extends Component {
       comments: filteredComments,
     });
   }
-
+  deletePost() {
+    db.collection("posts").doc(this.props.dataItem.id).delete();
+  }
   render() {
     return (
       <View style={styles.container}>
         {this.props.dataItem.data.owner == auth.currentUser.displayName ? (
-          <TouchableOpacity
-            onPress={() =>
-              this.props.deletePost(this.props.dataItem.data.createdAt)
-            }
-          >
+          <TouchableOpacity onPress={() => this.deletePost()}>
             <Ionicons name="trash" size="20px" color="red" />
           </TouchableOpacity>
         ) : null}
