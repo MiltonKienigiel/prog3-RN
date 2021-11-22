@@ -81,6 +81,7 @@ export default class CreatePost extends Component {
             <TouchableOpacity
               style={styles.button}
               onPress={() => this.handlePost()}
+              disabled={this.state.comment == "" ? true : false}
             >
               <Text style={styles.text}>Publicar</Text>
             </TouchableOpacity>

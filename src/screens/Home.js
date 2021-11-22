@@ -99,7 +99,5 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     color: "#ffd615",
   },
-  flatlist: {
-    width: "100%",
-  },
+  
 });

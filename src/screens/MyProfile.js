@@ -35,12 +35,14 @@ export default class Home extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Usuario: {auth.currentUser.displayName}</Text>
-        <Text>E-mail: {auth.currentUser.email}</Text>
-        <Text>
+        <Text style={styles.text}>Usuario: {auth.currentUser.displayName}</Text>
+        <Text style={styles.text}>E-mail: {auth.currentUser.email}</Text>
+        <Text style={styles.text}>
           Última fecha de ingreso: {auth.currentUser.metadata.lastSignInTime}
         </Text>
-        <Text>Publicaciones: {this.state.posts.length}</Text>{" "}
+        <Text style={styles.text}>
+          Publicaciones: {this.state.posts.length}
+        </Text>
         {/* AGREGAR CANTIDAD DE POSTEOS */}
         <TouchableOpacity
           style={styles.button}
@@ -49,9 +51,11 @@ export default class Home extends Component {
           <Text style={styles.text}> Cerrar sesión </Text>
         </TouchableOpacity>
         <FlatList
+          showsHorizontalScrollIndicator={false}
+          style={styles.flatlist}
           data={this.state.posts}
           keyExtractor={(post) => post.id.toString()}
-          renderItem={({ item }) => <Post dataItem={item}></Post>}
+          renderItem={({ item }) => <Post dataItem={item} />}
         />
       </View>
     );
@@ -66,6 +70,10 @@ const styles = StyleSheet.create({
     padding: 10,
     marginVertical: 10,
   },
+  flatlist: {
+    overflow: "hidden",
+    width: "100%",
+  },
   button: {
     width: "100%",
     backgroundColor: "#0F00FF",
@@ -78,21 +86,16 @@ const styles = StyleSheet.create({
     height: 200,
   },
   container: {
-    container: {
-      overflow: "hidden",
-      flex: 1,
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-      backgroundColor: "#1e2a78",
-      color: "#ff9f68",
-      // backgroundImage: 'linear-gradient(45deg, #FBDA61 0%, #FF5ACD 100%)',
-    },
+    overflow: "hidden",
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#1e2a78",
+    color: "#ff9f68",
+    // backgroundImage: 'linear-gradient(45deg, #FBDA61 0%, #FF5ACD 100%)',
   },
-  text: {
-    color: "white",
-    textAlign: "center",
-  },
+
   btn: {
     backgroundColor: "red",
     padding: 7,
