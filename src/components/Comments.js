@@ -70,7 +70,7 @@ export default class Post extends Component {
             )}
           />
         ) : (
-          <Text style={styles.comment}>Aún no hay comentarios.</Text>
+          <Text style={styles.comment}>Aún no hay comentarios. Sé el primero en opinar.</Text>
         )}
         <TextInput
           style={styles.input}

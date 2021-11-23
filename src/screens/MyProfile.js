@@ -32,6 +32,10 @@ export default class Home extends Component {
       ); //Snapshot
   } //Component
 
+  addPostRedirect(){
+    this.props.navigation.navigate("Publicar");
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -43,20 +47,31 @@ export default class Home extends Component {
         <Text style={styles.text}>
           Publicaciones: {this.state.posts.length}
         </Text>
-        {/* AGREGAR CANTIDAD DE POSTEOS */}
         <TouchableOpacity
           style={styles.button}
           onPress={() => this.props.handleLogout()}
         >
           <Text style={styles.text}> Cerrar sesión </Text>
         </TouchableOpacity>
-        <FlatList
+        {this.state.posts.length > 0
+          ? <FlatList
           showsHorizontalScrollIndicator={false}
           style={styles.flatlist}
           data={this.state.posts}
           keyExtractor={(post) => post.id.toString()}
           renderItem={({ item }) => <Post dataItem={item} />}
-        />
+          />
+          : <>
+              <Text style={styles.text}>No tenés niguna publicación.</Text>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => this.addPostRedirect()}
+              >
+                <Text style={styles.text}>¡Creá tu primer posteo!</Text>
+              </TouchableOpacity>
+            </>
+        }
+        
       </View>
     );
   }

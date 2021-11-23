@@ -98,9 +98,15 @@ export default class Post extends Component {
       comments: filteredComments,
     });
   }
+
   deletePost() {
-    db.collection("posts").doc(this.props.dataItem.id).delete();
+    let confirmDelete = confirm("¿Estás seguro de que querés eliminar esta publicación?")
+    
+    if (confirmDelete){
+      db.collection("posts").doc(this.props.dataItem.id).delete();
+    }
   }
+  
   render() {
     return (
       <View style={styles.container}>
@@ -117,7 +123,6 @@ export default class Post extends Component {
         <Text style={styles.text}>{this.props.dataItem.data.description}</Text>
         <Text style={styles.text}>{this.props.dataItem.data.createdAt}</Text>
         <Text style={styles.textLike}>
-          Likes: {this.state.likes}
           {!this.state.liked ? (
             <TouchableOpacity onPress={() => this.onLike()}>
               <Ionicons
@@ -137,6 +142,7 @@ export default class Post extends Component {
               />
             </TouchableOpacity>
           )}
+          {this.state.likes}
         </Text>
 
         {this.state.showModal ? (
