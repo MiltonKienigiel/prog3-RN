@@ -74,6 +74,8 @@ export default class Search extends Component{
                     filteredPosts.length > 0 ?
                         
                         <FlatList
+                            style={styles.flatlist}
+                            showsHorizontalScrollIndicator={false}
                             data = {filteredPosts}
                             keyExtractor = {post => post.id.toString()}
                             renderItem= {({item})=>
@@ -93,17 +95,28 @@ export default class Search extends Component{
 
 const styles = StyleSheet.create({
     container: {
+        overflow: "hidden",
         flex: 1,
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        backgroundImage: 'linear-gradient(45deg, #FBDA61 0%, #FF5ACD 100%)',
-    },
-    field: {
-        width: '80%',
-        backgroundColor: "#09009B",
-        color: '#FFA400',
+        backgroundColor: "#023047",
+        color: "#ff9f68",
+      },
+      field: {
+        width: "80%",
+        backgroundColor: "#f9ff21",
+        color: "#FFA400",
         padding: 10,
-        marginVertical: 10
-    },
+        marginVertical: 10,
+        borderRadius: 10,
+      },
+      flatlist: {
+        overflow: "hidden",
+        width: "100%",
+      },
+      text: {
+        paddingTop: 10,
+        color: "#ffd615",
+      },  
 })

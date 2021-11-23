@@ -9,6 +9,8 @@ import {
   Image,
 } from "react-native";
 import { auth, db, storage } from "../firebase/config";
+import Ionicons from "react-native-vector-icons/Ionicons";
+
 export default class CreatePost extends Component {
   constructor(props) {
     super(props);
@@ -36,6 +38,7 @@ export default class CreatePost extends Component {
       });
     });
   }
+
   uploadImage() {
     fetch(this.state.photo)
       .then((res) => res.blob())
@@ -58,18 +61,21 @@ export default class CreatePost extends Component {
       photo: "",
     });
   }
+
   render() {
     return (
       <View style={styles.container}>
         {this.state.photo ? (
           <>
             <Image style={styles.preview} source={{ uri: this.state.photo }} />
-            <TouchableOpacity onPress={() => this.onReject()}>
-              <Text>Cancelar</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => this.uploadImage()}>
-              <Text>Subir</Text>
-            </TouchableOpacity>
+            <View style={styles.uploadImage}>
+              <TouchableOpacity onPress={() => this.uploadImage()}>
+                <Ionicons name="checkmark-circle-outline" size="50px" color="green"/>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => this.onReject()}>
+                <Ionicons name="close-circle-outline" size="50px" color="red"/>
+              </TouchableOpacity>
+            </View>
           </>
         ) : (
           <>
@@ -78,11 +84,12 @@ export default class CreatePost extends Component {
               type={Camera.Constants.Type.front || Camera.Constants.Type.back}
               ref={(ref) => (this.camera = ref)}
             />
-            <TouchableOpacity
-              style={styles.shootButton}
-              onPress={() => this.takePicture()}
-            >
-              <Text>Shoot</Text>
+            <TouchableOpacity style={styles.uploadImage} onPress={() => this.takePicture()}>
+              <Ionicons
+                name="aperture-outline"
+                size="50px"
+                color="white"
+              />
             </TouchableOpacity>
           </>
         )}
@@ -103,6 +110,14 @@ const styles = StyleSheet.create({
   },
   camera: {
     width: "100%",
+    backgroundColor: '#001219',
+  },
+  uploadImage: {
+    flexDirection: 'row',
+    padding: 10,
+    width: '100%',
+    justifyContent: 'space-around',
+    backgroundColor: '#001219',
   },
   field: {
     width: "80%",

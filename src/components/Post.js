@@ -9,11 +9,11 @@ import {
   FlatList,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
-
 import { auth, db } from "../firebase/config";
 import firebase from "firebase";
 import Comments from "../components/Comments";
 import { AutoFocus } from "expo-camera/build/Camera.types";
+
 export default class Post extends Component {
   constructor(props) {
     super(props);
@@ -106,22 +106,35 @@ export default class Post extends Component {
       db.collection("posts").doc(this.props.dataItem.id).delete();
     }
   }
+
+  formatDate(date) {
+    var d = new Date(date),
+      month = "" + (d.getMonth() + 1),
+      day = "" + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+
+    return [day, month, year].join("/");
+  }
   
   render() {
     return (
       <View style={styles.container}>
-        {this.props.dataItem.data.owner == auth.currentUser.displayName ? (
-          <TouchableOpacity onPress={() => this.deletePost()}>
-            <Ionicons name="trash" size="20px" color="red" />
-          </TouchableOpacity>
-        ) : null}
-        <Text style={styles.textLeft}>{this.props.dataItem.data.owner}</Text>
+        <Text style={styles.textLeft}>{this.props.dataItem.data.owner}
+          {this.props.dataItem.data.owner == auth.currentUser.displayName ? (
+            <TouchableOpacity onPress={() => this.deletePost()}>
+              <Ionicons name="trash" size="20px" color="red"/>
+            </TouchableOpacity>
+          ) : null}
+        </Text>
         <Image
           style={styles.image}
           source={{ uri: this.props.dataItem.data.photo }}
         />
         <Text style={styles.text}>{this.props.dataItem.data.description}</Text>
-        <Text style={styles.text}>{this.props.dataItem.data.createdAt}</Text>
+        <Text style={styles.text}>{this.formatDate(this.props.dataItem.data.createdAt)}</Text>
         <Text style={styles.textLike}>
           {!this.state.liked ? (
             <TouchableOpacity onPress={() => this.onLike()}>
@@ -156,6 +169,12 @@ export default class Post extends Component {
               <Text style={styles.text}>
                 Ocultar comentarios ({this.props.dataItem.data.comments.length})
               </Text>
+              {/* <Ionicons
+                style={styles.heartIcon}
+                name="chatbubble-ellipses-outline"
+                size="20px"
+                color="black"
+              /> */}
             </TouchableOpacity>
             <Modal
               animationType="fade"
@@ -193,6 +212,7 @@ export default class Post extends Component {
 
 const styles = StyleSheet.create({
   image: {
+    width: '100%',
     height: 200,
     borderRadius: "12px",
   },

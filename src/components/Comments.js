@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   btn: {
-    backgroundColor: "#f9ff21",
+    backgroundColor: "#ffb703",
     color: "black",
     padding: 7,
     marginTop: 5,

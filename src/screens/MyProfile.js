@@ -78,13 +78,6 @@ export default class Home extends Component {
 }
 
 const styles = StyleSheet.create({
-  field: {
-    width: "90%",
-    backgroundColor: "#09009B",
-    color: "#FFA400",
-    padding: 10,
-    marginVertical: 10,
-  },
   flatlist: {
     overflow: "hidden",
     width: "100%",
@@ -106,11 +99,9 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#1e2a78",
+    backgroundColor: "#023047",
     color: "#ff9f68",
-    // backgroundImage: 'linear-gradient(45deg, #FBDA61 0%, #FF5ACD 100%)',
   },
-
   btn: {
     backgroundColor: "red",
     padding: 7,

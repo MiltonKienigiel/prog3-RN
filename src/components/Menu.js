@@ -133,10 +133,10 @@ export default class Menu extends Component {
         })}
         tabBarOptions={
           {
-            // activeBackgroundColor: "",
-            // inactiveBackgroundColor: "#ff1f5a",
-            // activeTintColor: "rgb(223, 0, 231)",
-            // showLabel: false,
+            activeBackgroundColor: "#ca6702",
+            inactiveBackgroundColor: "#bb3e03",
+            activeTintColor: "rgb(223, 0, 231)",
+            showLabel: false,
           }
         }
       >

@@ -59,9 +59,11 @@ export default class Home extends Component {
           <ActivityIndicator size="large" color="blue" />
         ) : (
           <>
-            <Text style={styles.text}>
-              ¡Hola {auth.currentUser.displayName}!
-            </Text>
+            <View style={styles.header}>
+              <Text style={styles.text}>
+                ¡Hola {auth.currentUser.displayName}!
+              </Text>
+            </View>
             <FlatList
               showsHorizontalScrollIndicator={false}
               style={styles.flatlist}
@@ -83,9 +85,13 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#1e2a78",
+    backgroundColor: "#001219",
     color: "#ff9f68",
-    // backgroundImage: 'linear-gradient(45deg, #FBDA61 0%, #FF5ACD 100%)',
+  },
+  header: {
+    backgroundColor: "#bb3e03",
+    width: '100%',
+    padding: 10,
   },
   field: {
     width: "80%",
@@ -94,10 +100,16 @@ const styles = StyleSheet.create({
     padding: 10,
     marginVertical: 10,
     borderRadius: 10,
+    textAlign: 'center'
+  },
+  flatlist: {
+    overflow: "hidden",
+    width: "100%",
   },
   text: {
-    paddingTop: 10,
-    color: "#ffd615",
-  },
-  
+    color: "#001219",
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: 600,
+  },  
 });

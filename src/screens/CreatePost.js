@@ -20,24 +20,12 @@ export default class CreatePost extends Component {
     };
   } // Constructor
 
-  formatDate(date) {
-    var d = new Date(date),
-      month = "" + (d.getMonth() + 1),
-      day = "" + d.getDate(),
-      year = d.getFullYear();
-
-    if (month.length < 2) month = "0" + month;
-    if (day.length < 2) day = "0" + day;
-
-    return [day, month, year].join("/");
-  }
-  
   handlePost() {
     db.collection("posts")
       .add({
         owner: auth.currentUser.displayName,
         description: this.state.comment,
-        createdAt: this.formatDate(Date.now()),
+        createdAt: Date.now(),
         likes: [],
         comments: [],
         photo: this.state.photo,
@@ -47,6 +35,8 @@ export default class CreatePost extends Component {
         alert("¡Posteo realizado!");
         this.setState({
           comment: "",
+          photo: "",
+          showCamera: true,
         });
         this.props.navigation.navigate("Home");
       }) //THEN
