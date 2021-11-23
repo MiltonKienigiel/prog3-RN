@@ -122,89 +122,103 @@ export default class Post extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.textLeft}>{this.props.dataItem.data.owner}
-          {this.props.dataItem.data.owner == auth.currentUser.displayName ? (
-            <TouchableOpacity onPress={() => this.deletePost()}>
-              <Ionicons name="trash" size="20px" color="red"/>
-            </TouchableOpacity>
-          ) : null}
-        </Text>
+        <View style={styles.inline}>
+          <Text style={styles.username}>{this.props.dataItem.data.owner}</Text>
+          {this.props.dataItem.data.owner == auth.currentUser.displayName
+            ? ( <TouchableOpacity onPress={() => this.deletePost()}>
+                  <Ionicons name="trash" size="20px" color="red"/>
+                </TouchableOpacity> )
+            : null}
+        </View>
         <Image
           style={styles.image}
           source={{ uri: this.props.dataItem.data.photo }}
         />
-        <Text style={styles.text}>{this.props.dataItem.data.description}</Text>
-        <Text style={styles.text}>{this.formatDate(this.props.dataItem.data.createdAt)}</Text>
-        <Text style={styles.textLike}>
-          {!this.state.liked ? (
-            <TouchableOpacity onPress={() => this.onLike()}>
-              <Ionicons
-                style={styles.heartIcon}
-                name="heart-outline"
-                size="20px"
-                color="red"
-              />
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity onPress={() => this.onDislike()}>
-              <Ionicons
-                style={styles.heartIcon}
-                name="heart"
-                size="20px"
-                color="red"
-              />
-            </TouchableOpacity>
-          )}
-          {this.state.likes}
-        </Text>
+        <View style={styles.inlineNear}>
+          <Text style={styles.username}>{this.props.dataItem.data.owner}</Text>
+          <Text style={styles.text}>{this.props.dataItem.data.description}</Text>
+        </View>
+        <View style={styles.inline}>
+          <Text style={styles.text}>{this.formatDate(this.props.dataItem.data.createdAt)}</Text>
+          <Text style={styles.text}>
+            {!this.state.liked ? (
+              <TouchableOpacity onPress={() => this.onLike()}>
+                <Ionicons
+                  style={styles.heartIcon}
+                  name="heart-outline"
+                  size="20px"
+                  color="red"
+                />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity onPress={() => this.onDislike()}>
+                <Ionicons
+                  style={styles.heartIcon}
+                  name="heart"
+                  size="20px"
+                  color="red"
+                />
+              </TouchableOpacity>
+            )}
+            <Text style={styles.text}>{this.state.likes}</Text>
+          </Text>
 
-        {this.state.showModal ? (
-          <>
+          {this.state.showModal ? (
+            <>
+              <TouchableOpacity
+                style={styles.inline}
+                onPress={() => {
+                  this.closeModal();
+                }}
+              >
+                {/* <Text style={styles.text}>
+                  Ocultar comentarios ({this.props.dataItem.data.comments.length})
+                </Text> */}
+                <Ionicons
+                  style={styles.heartIcon}
+                  name="chatbubble-ellipses-outline"
+                  size="20px"
+                  color="white"
+                />
+                <Text style={styles.text}>{this.props.dataItem.data.comments.length}</Text>
+              </TouchableOpacity>
+              <Modal
+                animationType="fade"
+                transparent={false}
+                visible={this.state.showModal}
+                style={styles.modal}
+              >
+                <Comments
+                  comments={this.props.dataItem.data.comments}
+                  closeModal={() => this.closeModal()}
+                  postId={this.props.dataItem.id}
+                  deleteComment={(deletedCommentId) =>
+                    this.deleteComment(deletedCommentId)
+                  }
+                  filteredComments={this.state.filteredComments}
+                />
+              </Modal>
+            </>
+          ) : (
             <TouchableOpacity
-              style={styles.btn}
+              style={styles.inline}
               onPress={() => {
-                this.closeModal();
+                this.showModal();
               }}
             >
-              <Text style={styles.text}>
-                Ocultar comentarios ({this.props.dataItem.data.comments.length})
-              </Text>
-              {/* <Ionicons
-                style={styles.heartIcon}
-                name="chatbubble-ellipses-outline"
-                size="20px"
-                color="black"
-              /> */}
+              {/* <Text style={styles.text}>
+                Ver comentarios ({this.props.dataItem.data.comments.length})
+              </Text> */}
+              <Ionicons
+                  style={styles.heartIcon}
+                  name="chatbubble-ellipses-outline"
+                  size="20px"
+                  color="white"
+                />
+                <Text style={styles.text}>{this.props.dataItem.data.comments.length}</Text>
             </TouchableOpacity>
-            <Modal
-              animationType="fade"
-              transparent={false}
-              visible={this.state.showModal}
-              style={styles.modal}
-            >
-              <Comments
-                comments={this.props.dataItem.data.comments}
-                closeModal={() => this.closeModal()}
-                postId={this.props.dataItem.id}
-                deleteComment={(deletedCommentId) =>
-                  this.deleteComment(deletedCommentId)
-                }
-                filteredComments={this.state.filteredComments}
-              />
-            </Modal>
-          </>
-        ) : (
-          <TouchableOpacity
-            style={styles.btn}
-            onPress={() => {
-              this.showModal();
-            }}
-          >
-            <Text style={styles.text}>
-              Ver comentarios ({this.props.dataItem.data.comments.length})
-            </Text>
-          </TouchableOpacity>
-        )}
+          )}
+        </View>
       </View>
     );
   } //Render
@@ -216,7 +230,21 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: "12px",
   },
-  heartIcon: {},
+  inline: {
+    flexWrap: 'wrap', 
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    margin: '5px',
+  },
+  inlineNear: {
+    flexWrap: 'wrap', 
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'flex-start'
+  },
+  heartIcon: {
+  },
   container: {
     flex: 1,
     width: "90%",
@@ -230,28 +258,25 @@ const styles = StyleSheet.create({
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.25,
+    shadowOpacity: 0.5,
     shadowRadius: 3.84,
     elevation: 5,
-    backgroundColor: "rgba(0, 0, 0, 0.247)",
+    backgroundColor: "rgba(0, 0, 0, 0.4)",
   },
   text: {
     color: "white",
     textAlign: "center",
     padding: "5px",
   },
-  textLike: {
-    color: "white",
-    textAlign: "center",
-    padding: "5px",
-  },
   heartIcon: {
-    paddingLeft: "10px",
+    marginLeft: "10px",
   },
-  textLeft: {
+  username: {
     textAlign: "left",
     color: "white",
-    paddingBottom: "10px",
+    fontWeight: 600,
+    fontSize: '15px',
+    padding: "5px",
   },
   btn: {
     backgroundColor: "#ff1f5a",

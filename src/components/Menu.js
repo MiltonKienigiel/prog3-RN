@@ -128,14 +128,13 @@ export default class Menu extends Component {
             // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
           },
-          tabBarActiveTintColor: "black",
+          tabBarActiveTintColor: "white",
           tabBarInactiveTintColor: "gray",
         })}
         tabBarOptions={
           {
-            activeBackgroundColor: "#ca6702",
-            inactiveBackgroundColor: "#bb3e03",
-            activeTintColor: "rgb(223, 0, 231)",
+            activeBackgroundColor: "#4a4e69",
+            inactiveBackgroundColor: "#22223b",
             showLabel: false,
           }
         }

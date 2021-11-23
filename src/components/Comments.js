@@ -51,10 +51,11 @@ export default class Post extends Component {
             data={this.props.comments}
             keyExtractor={(comment) => comment.id}
             renderItem={({ item }) => (
-              <>
-                <Text style={styles.comment}>
-                  <Text style={styles.commentBold}>{item.owner}</Text>
-                  {item.comment}
+                <View style={styles.inline}>
+                  <View style={styles.inlineNear}>
+                    <Text style={styles.commentBold}>{item.owner}</Text>
+                    <Text style={styles.comment}>{item.comment}</Text>
+                  </View>
                   {item.owner == auth.currentUser.displayName ? (
                     <TouchableOpacity
                       style={styles.closeModal}
@@ -65,8 +66,7 @@ export default class Post extends Component {
                       <Ionicons name="trash" size="15px" color="red" />
                     </TouchableOpacity>
                   ) : null}
-                </Text>
-              </>
+                </View>
             )}
           />
         ) : (
@@ -75,18 +75,19 @@ export default class Post extends Component {
         <TextInput
           style={styles.input}
           keyboardType="default"
-          placeholder="Esribe un comentario..."
+          placeholder="Escribe un comentario..."
+          placeholderTextColor="#d7d5d5"
           multiline={true}
-          numberOfLines={2}
+          numberOfLines={3}
           onChangeText={(text) => this.setState({ comment: text })}
           value={this.state.comment}
         />
         <TouchableOpacity
-          style={styles.btn}
+          style={this.state.comment == "" ? styles.btnDisabled : styles.btn}
           onPress={() => this.onComment()}
           disabled={this.state.comment == "" ? true : false}
         >
-          <Text style={styles.textBtn}>Comentar</Text>
+          <Text>Comentar</Text>
         </TouchableOpacity>
       </View>
     );
@@ -115,8 +116,27 @@ const styles = StyleSheet.create({
     elevation: 5,
     backgroundColor: "rgba(0, 0, 0, 0.247)",
   },
+  inline: {
+    flexWrap: 'wrap', 
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  inlineNear: {
+    flexWrap: 'wrap', 
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'flex-start'
+  },
   input: {
-    color: "grey",
+    color: "white",
+    flex: 1,
+    width: "100%",
+    justifyContent: "center",
+    padding: 10,
+    marginTop: 15,
+    borderRadius: 15,
+    backgroundColor: "rgba(0, 0, 0, 0.247)",
   },
   comment: {
     padding: "5px",
@@ -138,6 +158,14 @@ const styles = StyleSheet.create({
   btn: {
     backgroundColor: "#ffb703",
     color: "black",
+    textAlign: 'center',
+    padding: 7,
+    marginTop: 5,
+    borderRadius: 15,
+  },
+  btnDisabled: {
+    backgroundColor: "#e9c46a",
+    textAlign: 'center',
     padding: 7,
     marginTop: 5,
     borderRadius: 15,
