@@ -58,34 +58,28 @@ export default class Search extends Component{
 
         return(
             <View style={styles.container}>
-                  {this.props.loader || this.state.loaderPost? (
-                      <ActivityIndicator size='large' color='blue'/>
-                  ): 
-                <>
-                <Text> ¡Hola {auth.currentUser.displayName}!</Text>
+            {this.props.loader || this.state.loaderPost
+            ? (<ActivityIndicator size='large' color='blue'/>)
+            : <>
                 <TextInput
                     style={styles.field}
                     keyboardType="default"
                     placeholder="Buscar usuario..."
+                    placeholderTextColor="black"
                     onChangeText={text => this.setState({searchInput: text})}
                 />
-                {filteredUsers.length > 0 ?
-
-                    filteredPosts.length > 0 ?
-                        
-                        <FlatList
+                {filteredUsers.length > 0
+                    ? filteredPosts.length > 0
+                        ? <FlatList
                             style={styles.flatlist}
                             showsHorizontalScrollIndicator={false}
                             data = {filteredPosts}
                             keyExtractor = {post => post.id.toString()}
                             renderItem= {({item})=>
                                 <Post dataItem = {item}></Post>}
-                        />:
-                        <Text>Lo siento, este usuario aun no hizo un posteo</Text>
-                    
-                    : 
-                    <Text> Ese usuario no existe</Text>
-                    
+                        />
+                        : <Text>Lo siento, este usuario aun no hizo un posteo</Text>
+                    : <Text> Ese usuario no existe</Text>  
                 } 
                 </> }
             </View>
@@ -100,23 +94,31 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#023047",
+        backgroundColor: "#f2e9e4",
         color: "#ff9f68",
-      },
-      field: {
-        width: "80%",
-        backgroundColor: "#f9ff21",
-        color: "#FFA400",
+    },
+    header: {
+        backgroundColor: "#22223b",
+        width: '100%',
         padding: 10,
-        marginVertical: 10,
-        borderRadius: 10,
-      },
-      flatlist: {
+    },
+    field: {
+        width: "80%",
+        backgroundColor: "#ffb703",
+        color: "black",
+        textAlign: 'center',
+        padding: 7,
+        marginTop: 5,
+        borderRadius: 15,
+    },
+    flatlist: {
         overflow: "hidden",
         width: "100%",
-      },
-      text: {
-        paddingTop: 10,
-        color: "#ffd615",
-      },  
+    },
+    text: {
+        color: "white",
+        textAlign: 'center',
+        fontSize: 20,
+        fontWeight: 600,
+    },  
 })

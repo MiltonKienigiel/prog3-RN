@@ -82,7 +82,7 @@ export default class Post extends Component {
     this.setState({
       showModal: false,
     });
-  } //Show modal
+  } //Close modal
 
   deleteComment(deletedCommentId) {
     let filteredComments = this.props.dataItem.data.comments.filter(
@@ -243,8 +243,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start'
   },
-  heartIcon: {
-  },
   container: {
     flex: 1,
     width: "90%",
@@ -277,30 +275,6 @@ const styles = StyleSheet.create({
     fontWeight: 600,
     fontSize: '15px',
     padding: "5px",
-  },
-  btn: {
-    backgroundColor: "#ff1f5a",
-    padding: 7,
-    marginTop: 5,
-    borderRadius: 10,
-    width: "80%",
-    margin: "auto",
-  },
-  closeModal: {
-    alignSelf: "flex-end",
-    padding: 10,
-    backgroundColor: "#dc3545",
-    marginTop: 2,
-    marginBotom: 10,
-    borderRadius: 4,
-  },
-  modalText: {
-    fontWeight: "bold",
-    color: "#000",
-  },
-  modalView: {
-    backgroundColor: "orange",
-    borderRadius: 10,
   },
   modal: {
     border: "none",

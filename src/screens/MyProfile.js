@@ -1,14 +1,22 @@
 import React, { Component } from "react";
-import { Text, View, StyleSheet } from "react-native";
-import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Modal,
+  FlatList,
+} from "react-native";
 import { auth, db } from "../firebase/config";
 import Post from "../components/Post";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
       posts: [],
+      showModal: false,
     };
   } // Constructor
 
@@ -36,23 +44,82 @@ export default class Home extends Component {
     this.props.navigation.navigate("Publicar");
   }
 
+  showModal() {
+    this.setState({
+      showModal: true,
+    });
+  } //Show modal
+
+  closeModal() {
+    this.setState({
+      showModal: false,
+    });
+  } //Close modal
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Usuario: {auth.currentUser.displayName}</Text>
-        <Text style={styles.text}>E-mail: {auth.currentUser.email}</Text>
-        <Text style={styles.text}>
-          Última fecha de ingreso: {auth.currentUser.metadata.lastSignInTime}
-        </Text>
-        <Text style={styles.text}>
-          Publicaciones: {this.state.posts.length}
-        </Text>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => this.props.handleLogout()}
-        >
-          <Text style={styles.text}> Cerrar sesión </Text>
-        </TouchableOpacity>
+        <View style={styles.header}>
+          <View style={styles.inline}>
+            <Text style={styles.text}>{auth.currentUser.displayName}</Text>
+            <TouchableOpacity
+              onPress={() => this.props.handleLogout()}
+            >
+              <Ionicons
+                style={styles.heartIcon}
+                name="log-out-outline"
+                size="20px"
+                color="white"
+              />
+            </TouchableOpacity>
+          
+          {this.state.showModal ? (
+            <>
+              <TouchableOpacity
+                style={styles.inline}
+                onPress={() => {
+                  this.closeModal();
+                }}
+              >
+                <Ionicons
+                  style={styles.heartIcon}
+                  name="add-outline"
+                  size="20px"
+                  color="white"
+                />
+              </TouchableOpacity>
+              <Modal
+                animationType="fade"
+                transparent={false}
+                visible={this.state.showModal}
+                style={styles.modal}
+              >
+                <Text style={styles.text}>E-mail: {auth.currentUser.email}</Text>
+                <Text style={styles.text}>
+                  Última fecha de ingreso: {auth.currentUser.metadata.lastSignInTime}
+                </Text>
+                <Text style={styles.text}>
+                  Publicaciones: {this.state.posts.length}
+                </Text>
+              </Modal>
+            </>
+          ) : (
+            <TouchableOpacity
+              style={styles.inline}
+              onPress={() => {
+                this.showModal();
+              }}
+            >
+              <Ionicons
+                  style={styles.heartIcon}
+                  name="add-outline"
+                  size="20px"
+                  color="white"
+              />
+            </TouchableOpacity>
+          )} 
+          </View> {/* inline */}
+        </View> {/* header */}
         {this.state.posts.length > 0
           ? <FlatList
           showsHorizontalScrollIndicator={false}
@@ -78,6 +145,27 @@ export default class Home extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    overflow: "hidden",
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f2e9e4",
+    color: "#ff9f68",
+  },
+  header: {
+    backgroundColor: "#22223b",
+    width: '100%',
+    padding: 10,
+  },
+  inline: {
+    flexWrap: 'wrap', 
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    margin: '5px',
+  },
   flatlist: {
     overflow: "hidden",
     width: "100%",
@@ -87,44 +175,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#0F00FF",
   },
   text: {
-    color: "#FFA400",
-    textAlign: "center",
-  },
-  image: {
-    height: 200,
-  },
-  container: {
-    overflow: "hidden",
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#023047",
-    color: "#ff9f68",
-  },
-  btn: {
-    backgroundColor: "red",
-    padding: 7,
-    marginTop: 5,
-    borderRadius: 15,
-  },
-  closeModal: {
-    alignSelf: "flex-end",
-    padding: 10,
-    backgroundColor: "#dc3545",
-    marginTop: 2,
-    marginBotom: 10,
-    borderRadius: 4,
-  },
-  modalText: {
-    fontWeight: "bold",
-    color: "#fff",
-  },
-  modalView: {
-    backgroundColor: "green",
-    borderRadius: 10,
+    color: "white",
+    textAlign: "left",
   },
   modal: {
     border: "none",
+    width: "100%",
+    marginTop: "10px",
   },
 });

@@ -69,7 +69,7 @@ export default class Home extends Component {
               style={styles.flatlist}
               data={this.state.posts}
               keyExtractor={(post) => post.id.toString()}
-              renderItem={({ item }) => <Post dataItem={item}></Post>}
+              renderItem={({ item }) =><Post dataItem={item}></Post>}
             />
           </>
         )}
@@ -93,15 +93,6 @@ const styles = StyleSheet.create({
     width: '100%',
     padding: 10,
   },
-  field: {
-    width: "80%",
-    backgroundColor: "#f9ff21",
-    color: "#FFA400",
-    padding: 10,
-    marginVertical: 10,
-    borderRadius: 10,
-    textAlign: 'center'
-  },
   flatlist: {
     overflow: "hidden",
     width: "100%",
@@ -111,5 +102,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 20,
     fontWeight: 600,
-  },  
+  },
 });
