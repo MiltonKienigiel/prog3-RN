@@ -50,8 +50,8 @@ export default class Register extends Component {
 
   register() {
     if (
-      this.state.email == "" &&
-      this.state.password == "" &&
+      this.state.email == "" ||
+      this.state.password == "" ||
       this.state.username == ""
     ) {
       alert("Todos los campos son obligatorios.");
@@ -118,14 +118,16 @@ export default class Register extends Component {
           disabled={
             this.state.email == "" ||
             this.state.password == "" ||
-            this.state.username == ""
+            this.state.username == "" ||
+            this.state.checkPassword == ""
               ? true
               : false
           }
         >
           <Text style={this.state.email == "" ||
                       this.state.password == "" ||
-                      this.state.username == ""
+                      this.state.username == "" ||
+                      this.state.checkPassword == ""
                         ? styles.btnText
                         : null
                     }> Registrarme </Text>

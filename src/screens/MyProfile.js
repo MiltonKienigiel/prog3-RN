@@ -68,7 +68,7 @@ export default class Home extends Component {
             <TouchableOpacity onPress={() => { {this.state.showModal ? this.closeModal() : this.showModal() }}}>
                   <Ionicons
                     style={styles.icon}
-                    name="add-outline"
+                    name="information-circle-outline"
                     size="20px"
                     color="white"
                   />
