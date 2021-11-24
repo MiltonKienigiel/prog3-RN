@@ -167,6 +167,7 @@ export default class Menu extends Component {
                 <MyProfile
                   {...props}
                   handleLogout={() => this.handleLogout()}
+                  loader={this.state.loader}
                 />
               )}
             </Drawer.Screen>

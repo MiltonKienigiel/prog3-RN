@@ -17,6 +17,7 @@ export default class Home extends Component {
     this.state = {
       posts: [],
       showModal: false,
+      loaderPost: true
     };
   } // Constructor
 
@@ -35,6 +36,7 @@ export default class Home extends Component {
           }); // For each
           this.setState({
             posts: postsAux,
+            loaderPost: false,
           });
           console.log(this.state.posts)
         } // docs

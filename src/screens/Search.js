@@ -59,8 +59,9 @@ export default class Search extends Component{
         return(
             <View style={styles.container}>
             {this.props.loader || this.state.loaderPost
-            ? (<ActivityIndicator size='large' color='blue'/>)
-            : <>
+            ? (<Text> Hola </Text> 
+                )
+            : ( <>
                 <TextInput
                     style={styles.field}
                     keyboardType="default"
@@ -85,7 +86,7 @@ export default class Search extends Component{
                             <Text style={styles.textBlack}>Ese usuario no existe. Por favor, prueba con otro.</Text>
                         </View>
                 } 
-                </> }
+                </> )}
             </View>
         )
     }
