@@ -38,6 +38,11 @@ export default class Login extends Component {
           <ActivityIndicator size="large" color="blue" />
         ) : (
           <>
+            <View style={styles.header}>
+              <Text style={styles.title}>
+                ¡Bienvenido de vuelta!
+              </Text>
+            </View>
             <TextInput
               style={styles.field}
               keyboardType="email-address"
@@ -52,15 +57,19 @@ export default class Login extends Component {
               onChangeText={(text) => this.setState({ password: text })}
             />
             <TouchableOpacity
-              style={styles.button}
               onPress={() => this.login()}
-              disabled={
-                this.state.email == "" || this.state.password == ""
-                  ? true
-                  : false
-              }
-            >
-              <Text style={styles.text}> Ingresar </Text>
+              style={this.state.email == "" || this.state.password == ""
+                      ? styles.btnDisabled
+                      : styles.btn
+                    }
+              disabled={this.state.email == "" || this.state.password == ""
+                        ? true
+                        : false
+                      }>
+              <Text style={this.state.email == "" || this.state.password == ""
+                      ? styles.btnText
+                      : null
+                    }> Ingresar </Text>
             </TouchableOpacity>
           </>
         )}
@@ -71,22 +80,51 @@ export default class Login extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    overflow: "hidden",
     flex: 1,
+    flexDirection: "column",
     alignItems: "center",
+    backgroundColor: "#22223b",
+    color: "#ff9f68",
+    paddingTop: '20px',
   },
   field: {
     width: "80%",
-    backgroundColor: "#09009B",
-    color: "#FFA400",
+    backgroundColor: "#C9ADA7",
+    textAlign: 'center',
+    padding: 7,
+    marginTop: 5,
+    borderRadius: 15,
+  },
+  btn: {
+    backgroundColor: "#ffb703",
+    color: "black",
+    textAlign: 'center',
+    padding: 7,
+    marginTop: 15,
+    borderRadius: 15,
+    width: '80%',
+  },
+  btnDisabled: {
+    backgroundColor: "#e9c46a",
+    textAlign: 'center',
+    padding: 7,
+    marginTop: 15,
+    borderRadius: 15,
+    width: '80%',
+  },
+  btnText: {
+    color: 'gray',
+  },
+  header: {
+    backgroundColor: "#22223b",
+    width: '100%',
     padding: 10,
-    marginVertical: 10,
   },
-  button: {
-    width: "30%",
-    backgroundColor: "#0F00FF",
-  },
-  text: {
-    color: "#FFA400",
-    textAlign: "center",
+  title: {
+    color: "white",
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: 600,
   },
 });

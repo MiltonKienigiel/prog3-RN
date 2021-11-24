@@ -61,7 +61,7 @@ export default class Home extends Component {
       <View style={styles.container}>
         <View style={styles.header}>
           <View style={styles.inline}>
-            <Text style={styles.text}>{auth.currentUser.displayName}</Text>
+            <Text style={styles.username}>{auth.currentUser.displayName}</Text>
             <TouchableOpacity
               onPress={() => this.props.handleLogout()}
             >
@@ -129,12 +129,12 @@ export default class Home extends Component {
           renderItem={({ item }) => <Post dataItem={item} />}
           />
           : <>
-              <Text style={styles.text}>No tenés niguna publicación.</Text>
+              <Text>No tenés niguna publicación.</Text>
               <TouchableOpacity
-                style={styles.button}
+                style={styles.btn}
                 onPress={() => this.addPostRedirect()}
               >
-                <Text style={styles.text}>¡Creá tu primer posteo!</Text>
+                <Text>¡Creá tu primer posteo!</Text>
               </TouchableOpacity>
             </>
         }
@@ -158,6 +158,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#22223b",
     width: '100%',
     padding: 10,
+    position: 'relative',
+    zIndex: 0,
   },
   inline: {
     flexWrap: 'wrap', 
@@ -170,13 +172,24 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     width: "100%",
   },
-  button: {
-    width: "100%",
-    backgroundColor: "#0F00FF",
+  btn: {
+    backgroundColor: "#ffb703",
+    color: "black",
+    textAlign: 'center',
+    padding: 7,
+    marginTop: 5,
+    borderRadius: 15,
   },
   text: {
     color: "white",
     textAlign: "left",
+  },
+  username: {
+    textAlign: "left",
+    color: "white",
+    fontWeight: 600,
+    fontSize: '15px',
+    padding: "5px",
   },
   modal: {
     border: "none",

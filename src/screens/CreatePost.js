@@ -46,7 +46,6 @@ export default class CreatePost extends Component {
   } // Handle post
 
   savePhoto(url) {
-    console.log("este es el url: ", url);
     this.setState({
       photo: url,
       showCamera: false,
@@ -66,16 +65,16 @@ export default class CreatePost extends Component {
               keyboardType="default"
               placeholder="¿En qué estás pensando?"
               multiline={true}
-              numberOfLines={4}
+              numberOfLines={3}
               onChangeText={(text) => this.setState({ comment: text })}
               value={this.state.comment}
             />
             <TouchableOpacity
-              style={styles.button}
+              style={this.state.comment == "" ? styles.btnDisabled : styles.btn}
               onPress={() => this.handlePost()}
               disabled={this.state.comment == "" ? true : false}
             >
-              <Text style={styles.text}>Publicar</Text>
+              <Text style={this.state.comment == "" ? styles.btnText : null}>Publicar</Text>
             </TouchableOpacity>
           </>
         )}
@@ -86,27 +85,47 @@ export default class CreatePost extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    overflow: "hidden",
     flex: 1,
-    width: "100%",
+    flexDirection: "column",
+    justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#22223b",
+    color: "#ff9f68",
   },
   field: {
-    width: "80%",
-    backgroundColor: "#09009B",
-    color: "#FFA400",
+    color: "white",
+    flex: 1,
+    width: "90%",
+    justifyContent: "center",
     padding: 10,
-    marginVertical: 10,
+    marginTop: 15,
+    borderRadius: 15,
+    backgroundColor: "rgba(0, 0, 0, 0.247)",
   },
-  button: {
-    width: "30%",
-    backgroundColor: "#0F00FF",
+  btn: {
+    backgroundColor: "#ffb703",
+    textAlign: 'center',
+    padding: 7,
+    margin: 10,
+    borderRadius: 15,
+    width: '90%',
   },
-  text: {
-    color: "#FFA400",
-    textAlign: "center",
+  btnDisabled: {
+    backgroundColor: "#e9c46a",
+    textAlign: 'center',
+    padding: 7,
+    margin: 10,
+    borderRadius: 15,
+    width: '90%',
+  },
+  btnText: {
+    color: 'gray',
   },
   image: {
+    marginTop: 15,
     height: 300,
     width: "90%",
+    borderRadius: "12px",
   },
 });

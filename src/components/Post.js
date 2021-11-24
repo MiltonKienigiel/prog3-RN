@@ -147,7 +147,7 @@ export default class Post extends Component {
                   style={styles.heartIcon}
                   name="heart-outline"
                   size="20px"
-                  color="red"
+                  color="white"
                 />
               </TouchableOpacity>
             ) : (
@@ -171,12 +171,9 @@ export default class Post extends Component {
                   this.closeModal();
                 }}
               >
-                {/* <Text style={styles.text}>
-                  Ocultar comentarios ({this.props.dataItem.data.comments.length})
-                </Text> */}
                 <Ionicons
                   style={styles.heartIcon}
-                  name="chatbubble-ellipses-outline"
+                  name="chatbubble-ellipses"
                   size="20px"
                   color="white"
                 />
@@ -206,9 +203,6 @@ export default class Post extends Component {
                 this.showModal();
               }}
             >
-              {/* <Text style={styles.text}>
-                Ver comentarios ({this.props.dataItem.data.comments.length})
-              </Text> */}
               <Ionicons
                   style={styles.heartIcon}
                   name="chatbubble-ellipses-outline"
@@ -259,7 +253,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 3.84,
     elevation: 5,
-    backgroundColor: "rgba(0, 0, 0, 0.4)",
+    backgroundColor: "#4A4E69",
   },
   text: {
     color: "white",

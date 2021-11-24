@@ -75,6 +75,11 @@ export default class Register extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.title}>
+            ¿Primera vez por acá? ¡Registrate!
+          </Text>
+        </View>
         <TextInput
           style={styles.field}
           keyboardType="email-address"
@@ -101,9 +106,14 @@ export default class Register extends Component {
           secureTextEntry={true}
           onChangeText={(text) => this.setState({ checkPassword: text })}
         />
-
         <TouchableOpacity
-          style={styles.button}
+          style={
+            this.state.email == "" ||
+            this.state.password == "" ||
+            this.state.username == ""
+              ? styles.btnDisabled
+              : styles.btn
+          }
           onPress={() => this.register()}
           disabled={
             this.state.email == "" ||
@@ -113,7 +123,12 @@ export default class Register extends Component {
               : false
           }
         >
-          <Text style={styles.text}> Registrarme </Text>
+          <Text style={this.state.email == "" ||
+                      this.state.password == "" ||
+                      this.state.username == ""
+                        ? styles.btnText
+                        : null
+                    }> Registrarme </Text>
         </TouchableOpacity>
       </View>
     );
@@ -122,22 +137,51 @@ export default class Register extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    overflow: "hidden",
     flex: 1,
+    flexDirection: "column",
     alignItems: "center",
+    backgroundColor: "#22223b",
+    color: "#ff9f68",
+    paddingTop: '20px',
   },
   field: {
     width: "80%",
-    backgroundColor: "#09009B",
-    color: "#FFA400",
+    backgroundColor: "#C9ADA7",
+    textAlign: 'center',
+    padding: 7,
+    marginTop: 5,
+    borderRadius: 15,
+  },
+  btn: {
+    backgroundColor: "#ffb703",
+    color: "black",
+    textAlign: 'center',
+    padding: 7,
+    marginTop: 15,
+    borderRadius: 15,
+    width: '80%',
+  },
+  btnDisabled: {
+    backgroundColor: "#e9c46a",
+    textAlign: 'center',
+    padding: 7,
+    marginTop: 15,
+    borderRadius: 15,
+    width: '80%',
+  },
+  btnText: {
+    color: 'gray',
+  },
+  header: {
+    backgroundColor: "#22223b",
+    width: '100%',
     padding: 10,
-    marginVertical: 10,
   },
-  button: {
-    width: "30%",
-    backgroundColor: "#0F00FF",
-  },
-  text: {
-    color: "#FFA400",
-    textAlign: "center",
+  title: {
+    color: "white",
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: 600,
   },
 });

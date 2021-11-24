@@ -73,7 +73,7 @@ export default class Post extends Component {
           <Text style={styles.comment}>Aún no hay comentarios. Sé el primero en opinar.</Text>
         )}
         <TextInput
-          style={styles.input}
+          style={styles.field}
           keyboardType="default"
           placeholder="Escribe un comentario..."
           placeholderTextColor="#d7d5d5"
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start'
   },
-  input: {
+  field: {
     color: "white",
     flex: 1,
     width: "100%",
@@ -149,10 +149,6 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "white",
-    textAlign: "center",
-  },
-  textBtn: {
-    color: "black",
     textAlign: "center",
   },
   btn: {

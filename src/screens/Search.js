@@ -103,13 +103,13 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     field: {
-        width: "80%",
-        backgroundColor: "#ffb703",
+        width: "90%",
+        backgroundColor: "#C9ADA7",
         color: "black",
         textAlign: 'center',
         padding: 7,
         marginTop: 5,
-        borderRadius: 15,
+        borderRadius: 5,
     },
     flatlist: {
         overflow: "hidden",
