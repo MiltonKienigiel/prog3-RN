@@ -115,7 +115,7 @@ export default class Menu extends Component {
               iconName = focused ? "home" : "home-outline";
             } else if (route.name === "Publicar") {
               iconName = focused ? "add-circle" : "add-circle-outline";
-            } else if (route.name === "Buscar Posteos") {
+            } else if (route.name === "Buscar") {
               iconName = focused ? "search" : "search-outline";
             } else if (route.name === "Mi perfil") {
               iconName = focused ? "person" : "person-outline";
@@ -153,7 +153,7 @@ export default class Menu extends Component {
             <Drawer.Screen name="Publicar">
               {(props) => <CreatePost {...props} />}
             </Drawer.Screen>
-            <Drawer.Screen name="Buscar Posteos">
+            <Drawer.Screen name="Buscar">
               {(props) => (
                 <Search
                   {...props}

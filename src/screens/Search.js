@@ -64,7 +64,7 @@ export default class Search extends Component{
                 <TextInput
                     style={styles.field}
                     keyboardType="default"
-                    placeholder="Buscar usuario..."
+                    placeholder="Buscar por usuario..."
                     placeholderTextColor="black"
                     onChangeText={text => this.setState({searchInput: text})}
                 />
@@ -78,8 +78,12 @@ export default class Search extends Component{
                             renderItem= {({item})=>
                                 <Post dataItem = {item}></Post>}
                         />
-                        : <Text>Lo siento, este usuario aun no hizo un posteo</Text>
-                    : <Text> Ese usuario no existe</Text>  
+                        :   <View style={styles.noFlatlist}>
+                                <Text style={styles.textBlack}>Lo siento, este usuario aun no hizo un posteo</Text>
+                            </View>
+                    :   <View style={styles.noFlatlist}>
+                            <Text style={styles.textBlack}>Ese usuario no existe. Por favor, prueba con otro.</Text>
+                        </View>
                 } 
                 </> }
             </View>
@@ -114,6 +118,21 @@ const styles = StyleSheet.create({
     flatlist: {
         overflow: "hidden",
         width: "100%",
+        flex: 9,
+        flexDirection: 'column',
+    },
+    noFlatlist: {
+        overflow: "hidden",
+        width: "100%",
+        flex: 9,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    textBlack: {
+        color: "black",
+        textAlign: "center",
+        margin: 30,
     },
     text: {
         color: "white",

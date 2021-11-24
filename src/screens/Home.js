@@ -96,6 +96,8 @@ const styles = StyleSheet.create({
   flatlist: {
     overflow: "hidden",
     width: "100%",
+    flex: 9,
+    flexDirection: 'column',
   },
   text: {
     color: "white",

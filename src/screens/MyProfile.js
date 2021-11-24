@@ -36,6 +36,7 @@ export default class Home extends Component {
           this.setState({
             posts: postsAux,
           });
+          console.log(this.state.posts)
         } // docs
       ); //Snapshot
   } //Component
@@ -62,63 +63,41 @@ export default class Home extends Component {
         <View style={styles.header}>
           <View style={styles.inline}>
             <Text style={styles.username}>{auth.currentUser.displayName}</Text>
-            <TouchableOpacity
-              onPress={() => this.props.handleLogout()}
-            >
+            <TouchableOpacity onPress={() => { {this.state.showModal ? this.closeModal() : this.showModal() }}}>
+                  <Ionicons
+                    style={styles.icon}
+                    name="add-outline"
+                    size="20px"
+                    color="white"
+                  />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.props.handleLogout()}>
               <Ionicons
-                style={styles.heartIcon}
+                style={styles.icon}
                 name="log-out-outline"
                 size="20px"
                 color="white"
               />
             </TouchableOpacity>
-          
-          {this.state.showModal ? (
-            <>
-              <TouchableOpacity
-                style={styles.inline}
-                onPress={() => {
-                  this.closeModal();
-                }}
-              >
-                <Ionicons
-                  style={styles.heartIcon}
-                  name="add-outline"
-                  size="20px"
-                  color="white"
-                />
-              </TouchableOpacity>
-              <Modal
-                animationType="fade"
-                transparent={false}
-                visible={this.state.showModal}
-                style={styles.modal}
-              >
-                <Text style={styles.text}>E-mail: {auth.currentUser.email}</Text>
-                <Text style={styles.text}>
-                  Última fecha de ingreso: {auth.currentUser.metadata.lastSignInTime}
-                </Text>
-                <Text style={styles.text}>
-                  Publicaciones: {this.state.posts.length}
-                </Text>
-              </Modal>
-            </>
-          ) : (
-            <TouchableOpacity
-              style={styles.inline}
-              onPress={() => {
-                this.showModal();
-              }}
-            >
-              <Ionicons
-                  style={styles.heartIcon}
-                  name="add-outline"
-                  size="20px"
-                  color="white"
-              />
-            </TouchableOpacity>
-          )} 
           </View> {/* inline */}
+          {this.state.showModal ? (
+              <>
+                <Modal
+                  animationType="fade"
+                  transparent={false}
+                  visible={this.state.showModal}
+                  style={styles.modal}
+                >
+                  <Text style={styles.text}>E-mail: {auth.currentUser.email}</Text>
+                  <Text style={styles.text}>
+                    Última fecha de ingreso: {auth.currentUser.metadata.lastSignInTime}
+                  </Text>
+                  <Text style={styles.text}>
+                    Publicaciones: {this.state.posts.length}
+                  </Text>
+                </Modal>
+              </>
+            ) : null }
         </View> {/* header */}
         {this.state.posts.length > 0
           ? <FlatList
@@ -128,15 +107,15 @@ export default class Home extends Component {
           keyExtractor={(post) => post.id.toString()}
           renderItem={({ item }) => <Post dataItem={item} />}
           />
-          : <>
-              <Text>No tenés niguna publicación.</Text>
+          : <View style={styles.noFlatlist}>
+              <Text style={styles.textBlack}>No tenés niguna publicación.</Text>
               <TouchableOpacity
                 style={styles.btn}
                 onPress={() => this.addPostRedirect()}
               >
                 <Text>¡Creá tu primer posteo!</Text>
               </TouchableOpacity>
-            </>
+            </View>
         }
         
       </View>
@@ -156,21 +135,37 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: "#22223b",
+    boxSizing: 'border-box',
     width: '100%',
     padding: 10,
     position: 'relative',
     zIndex: 0,
+    flexDirection: 'column',
+    justifyContent: 'space-around'
   },
   inline: {
-    flexWrap: 'wrap', 
-    alignItems: 'center',
+    flexWrap: 'wrap',
+    alignItems: 'space-between',
     flexDirection: 'row',
-    justifyContent: 'space-between',
     margin: '5px',
+    justifyContent: 'space-between'
+  },
+  icon: {
+    margin: 5,
   },
   flatlist: {
     overflow: "hidden",
     width: "100%",
+    flex: 9,
+    flexDirection: 'column',
+  },
+  noFlatlist: {
+    overflow: "hidden",
+    width: "100%",
+    flex: 9,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   btn: {
     backgroundColor: "#ffb703",
@@ -179,10 +174,17 @@ const styles = StyleSheet.create({
     padding: 7,
     marginTop: 5,
     borderRadius: 15,
+    width: '80%',
   },
   text: {
     color: "white",
-    textAlign: "left",
+    textAlign: "center",
+    margin: 5,
+  },
+  textBlack: {
+    color: "black",
+    textAlign: "center",
+    margin: 30,
   },
   username: {
     textAlign: "left",
@@ -195,5 +197,7 @@ const styles = StyleSheet.create({
     border: "none",
     width: "100%",
     marginTop: "10px",
+    flexDirection: 'column',
+    justifyContent: 'space-around'
   },
 });
