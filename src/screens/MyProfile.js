@@ -24,7 +24,7 @@ export default class Home extends Component {
   componentDidMount() {
     db.collection("posts")
       .where("owner", "==", auth.currentUser.displayName)
-      .orderBy("createdAt", "desc")
+      // .orderBy("createdAt", "desc")
       .onSnapshot(
         (docs) => {
           let postsAux = [];
