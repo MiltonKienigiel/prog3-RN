@@ -51,26 +51,28 @@ export default class Post extends Component {
             data={this.props.comments}
             keyExtractor={(comment) => comment.id}
             renderItem={({ item }) => (
-                <View style={styles.inline}>
-                  <View style={styles.inlineNear}>
-                    <Text style={styles.commentBold}>{item.owner}</Text>
-                    <Text style={styles.comment}>{item.comment}</Text>
-                  </View>
-                  {item.owner == auth.currentUser.displayName ? (
-                    <TouchableOpacity
-                      style={styles.closeModal}
-                      onPress={() => {
-                        this.props.deleteComment(item.id);
-                      }}
-                    >
-                      <Ionicons name="trash" size="15px" color="red" />
-                    </TouchableOpacity>
-                  ) : null}
+              <View style={styles.inline}>
+                <View style={styles.inlineNear}>
+                  <Text style={styles.commentBold}>{item.owner}</Text>
+                  <Text style={styles.comment}>{item.comment}</Text>
                 </View>
+                {item.owner == auth.currentUser.displayName ? (
+                  <TouchableOpacity
+                    style={styles.closeModal}
+                    onPress={() => {
+                      this.props.deleteComment(item.id);
+                    }}
+                  >
+                    <Ionicons name="trash" size="15px" color="red" />
+                  </TouchableOpacity>
+                ) : null}
+              </View>
             )}
           />
         ) : (
-          <Text style={styles.comment}>Aún no hay comentarios. Sé el primero en opinar.</Text>
+          <Text style={styles.comment}>
+            Aún no hay comentarios. Sé el primero en opinar.
+          </Text>
         )}
         <TextInput
           style={styles.field}
@@ -117,16 +119,16 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.247)",
   },
   inline: {
-    flexWrap: 'wrap', 
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between'
+    flexWrap: "wrap",
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   inlineNear: {
-    flexWrap: 'wrap', 
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'flex-start'
+    flexWrap: "wrap",
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "flex-start",
   },
   field: {
     color: "white",
@@ -139,6 +141,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.247)",
   },
   comment: {
+    maxWidth: 170,
     padding: 5,
     color: "white",
   },
@@ -154,14 +157,14 @@ const styles = StyleSheet.create({
   btn: {
     backgroundColor: "#ffb703",
     color: "black",
-    textAlign: 'center',
+    textAlign: "center",
     padding: 7,
     marginTop: 5,
     borderRadius: 15,
   },
   btnDisabled: {
     backgroundColor: "#e9c46a",
-    textAlign: 'center',
+    textAlign: "center",
     padding: 7,
     marginTop: 5,
     borderRadius: 15,
