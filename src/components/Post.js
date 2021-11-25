@@ -100,9 +100,11 @@ export default class Post extends Component {
   }
 
   deletePost() {
-    let confirmDelete = confirm("¿Estás seguro de que querés eliminar esta publicación?")
-    
-    if (confirmDelete){
+    let confirmDelete = confirm(
+      "¿Estás seguro de que querés eliminar esta publicación?"
+    );
+
+    if (confirmDelete) {
       db.collection("posts").doc(this.props.dataItem.id).delete();
     }
   }
@@ -118,17 +120,22 @@ export default class Post extends Component {
 
     return [day, month, year].join("/");
   }
-  
+
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.inline}>
-          <Text style={styles.username}>{this.props.dataItem.data.owner}</Text>
-          {this.props.dataItem.data.owner == auth.currentUser.displayName
-            ? ( <TouchableOpacity onPress={() => this.deletePost()}>
-                  <Ionicons name="trash" size="20px" color="red"/>
-                </TouchableOpacity> )
-            : null}
+          <Text style={styles.username}>
+            <Ionicons name="person-circle-outline" size="20px" color="white" />
+            <Text style={styles.paddingLeft}>
+              {this.props.dataItem.data.owner}
+            </Text>
+          </Text>
+          {this.props.dataItem.data.owner == auth.currentUser.displayName ? (
+            <TouchableOpacity onPress={() => this.deletePost()}>
+              <Ionicons name="trash" size="20px" color="red" />
+            </TouchableOpacity>
+          ) : null}
         </View>
         <Image
           style={styles.image}
@@ -136,10 +143,14 @@ export default class Post extends Component {
         />
         <View style={styles.inlineNear}>
           <Text style={styles.username}>{this.props.dataItem.data.owner}</Text>
-          <Text style={styles.text}>{this.props.dataItem.data.description}</Text>
+          <Text style={styles.text}>
+            {this.props.dataItem.data.description}
+          </Text>
         </View>
         <View style={styles.inline}>
-          <Text style={styles.text}>{this.formatDate(this.props.dataItem.data.createdAt)}</Text>
+          <Text style={styles.text}>
+            {this.formatDate(this.props.dataItem.data.createdAt)}
+          </Text>
           <Text style={styles.text}>
             {!this.state.liked ? (
               <TouchableOpacity onPress={() => this.onLike()}>
@@ -177,7 +188,9 @@ export default class Post extends Component {
                   size="20px"
                   color="white"
                 />
-                <Text style={styles.text}>{this.props.dataItem.data.comments.length}</Text>
+                <Text style={styles.text}>
+                  {this.props.dataItem.data.comments.length}
+                </Text>
               </TouchableOpacity>
               <Modal
                 animationType="fade"
@@ -204,12 +217,14 @@ export default class Post extends Component {
               }}
             >
               <Ionicons
-                  style={styles.heartIcon}
-                  name="chatbubble-ellipses-outline"
-                  size="20px"
-                  color="white"
-                />
-                <Text style={styles.text}>{this.props.dataItem.data.comments.length}</Text>
+                style={styles.heartIcon}
+                name="chatbubble-ellipses-outline"
+                size="20px"
+                color="white"
+              />
+              <Text style={styles.text}>
+                {this.props.dataItem.data.comments.length}
+              </Text>
             </TouchableOpacity>
           )}
         </View>
@@ -220,22 +235,22 @@ export default class Post extends Component {
 
 const styles = StyleSheet.create({
   image: {
-    width: '100%',
+    width: "100%",
     height: 200,
     borderRadius: 12,
   },
   inline: {
-    flexWrap: 'wrap', 
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexWrap: "wrap",
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
     margin: 5,
   },
   inlineNear: {
-    flexWrap: 'wrap', 
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'flex-start'
+    flexWrap: "wrap",
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "flex-start",
   },
   container: {
     flex: 1,
@@ -266,7 +281,7 @@ const styles = StyleSheet.create({
   username: {
     textAlign: "left",
     color: "white",
-    fontWeight: '600',
+    fontWeight: "600",
     fontSize: 15,
     padding: 5,
   },
@@ -274,5 +289,8 @@ const styles = StyleSheet.create({
     border: "none",
     width: "100%",
     marginTop: 10,
+  },
+  paddingLeft: {
+    paddingLeft: "5px",
   },
 }); //Styles

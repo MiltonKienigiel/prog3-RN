@@ -76,9 +76,7 @@ export default class Register extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.title}>
-            ¿Primera vez por acá? ¡Registrate!
-          </Text>
+          <Text style={styles.title}>¿Primera vez por acá? ¡Registrate!</Text>
         </View>
         <TextInput
           style={styles.field}
@@ -110,7 +108,8 @@ export default class Register extends Component {
           style={
             this.state.email == "" ||
             this.state.password == "" ||
-            this.state.username == ""
+            this.state.username == "" ||
+            this.state.checkPassword == ""
               ? styles.btnDisabled
               : styles.btn
           }
@@ -124,13 +123,19 @@ export default class Register extends Component {
               : false
           }
         >
-          <Text style={this.state.email == "" ||
-                      this.state.password == "" ||
-                      this.state.username == "" ||
-                      this.state.checkPassword == ""
-                        ? styles.btnText
-                        : null
-                    }> Registrarme </Text>
+          <Text
+            style={
+              this.state.email == "" ||
+              this.state.password == "" ||
+              this.state.username == "" ||
+              this.state.checkPassword == ""
+                ? styles.btnText
+                : null
+            }
+          >
+            {" "}
+            Registrarme{" "}
+          </Text>
         </TouchableOpacity>
       </View>
     );
@@ -150,7 +155,7 @@ const styles = StyleSheet.create({
   field: {
     width: "80%",
     backgroundColor: "#C9ADA7",
-    textAlign: 'center',
+    textAlign: "center",
     padding: 7,
     marginTop: 5,
     borderRadius: 15,
@@ -158,32 +163,32 @@ const styles = StyleSheet.create({
   btn: {
     backgroundColor: "#ffb703",
     color: "black",
-    textAlign: 'center',
+    textAlign: "center",
     padding: 7,
     marginTop: 15,
     borderRadius: 15,
-    width: '80%',
+    width: "80%",
   },
   btnDisabled: {
     backgroundColor: "#e9c46a",
-    textAlign: 'center',
+    textAlign: "center",
     padding: 7,
     marginTop: 15,
     borderRadius: 15,
-    width: '80%',
+    width: "80%",
   },
   btnText: {
-    color: 'gray',
+    color: "gray",
   },
   header: {
     backgroundColor: "#22223b",
-    width: '100%',
+    width: "100%",
     padding: 10,
   },
   title: {
     color: "white",
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 20,
-    fontWeight: '600',
+    fontWeight: "600",
   },
 });

@@ -131,13 +131,11 @@ export default class Menu extends Component {
           tabBarActiveTintColor: "white",
           tabBarInactiveTintColor: "gray",
         })}
-        tabBarOptions={
-          {
-            activeBackgroundColor: "#4a4e69",
-            inactiveBackgroundColor: "#22223b",
-            showLabel: false,
-          }
-        }
+        tabBarOptions={{
+          activeBackgroundColor: "#4a4e69",
+          inactiveBackgroundColor: "#22223b",
+          showLabel: false,
+        }}
       >
         {this.state.loggedIn === true ? (
           <>

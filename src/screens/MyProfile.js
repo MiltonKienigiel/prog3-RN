@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Modal,
   FlatList,
+  ActivityIndicator,
 } from "react-native";
 import { auth, db } from "../firebase/config";
 import Post from "../components/Post";
@@ -17,7 +18,7 @@ export default class Home extends Component {
     this.state = {
       posts: [],
       showModal: false,
-      loaderPost: true
+      loader: true,
     };
   } // Constructor
 
@@ -36,14 +37,14 @@ export default class Home extends Component {
           }); // For each
           this.setState({
             posts: postsAux,
-            loaderPost: false,
+            loader: false,
           });
-          console.log(this.state.posts)
+          console.log(this.state.posts);
         } // docs
       ); //Snapshot
   } //Component
 
-  addPostRedirect(){
+  addPostRedirect() {
     this.props.navigation.navigate("Publicar");
   }
 
@@ -61,66 +62,99 @@ export default class Home extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <View style={styles.inline}>
-            <Text style={styles.username}>{auth.currentUser.displayName}</Text>
-            <TouchableOpacity onPress={() => { {this.state.showModal ? this.closeModal() : this.showModal() }}}>
+      <>
+        {this.state.loader ? (
+          <ActivityIndicator size="large" color="blue" />
+        ) : (
+          <View style={styles.container}>
+            <View style={styles.header}>
+              <View style={styles.inline}>
+                <Text style={styles.username}>
+                  {auth.currentUser.displayName}
+                </Text>
+                <TouchableOpacity
+                  onPress={() => {
+                    {
+                      this.state.showModal
+                        ? this.closeModal()
+                        : this.showModal();
+                    }
+                  }}
+                >
                   <Ionicons
                     style={styles.icon}
                     name="information-circle-outline"
                     size="20px"
                     color="white"
                   />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => this.props.handleLogout()}>
-              <Ionicons
-                style={styles.icon}
-                name="log-out-outline"
-                size="20px"
-                color="white"
-              />
-            </TouchableOpacity>
-          </View> {/* inline */}
-          {this.state.showModal ? (
-              <>
-                <Modal
-                  animationType="fade"
-                  transparent={false}
-                  visible={this.state.showModal}
-                  style={styles.modal}
-                >
-                  <Text style={styles.text}>E-mail: {auth.currentUser.email}</Text>
-                  <Text style={styles.text}>
-                    Última fecha de ingreso: {auth.currentUser.metadata.lastSignInTime}
-                  </Text>
-                  <Text style={styles.text}>
-                    Publicaciones: {this.state.posts.length}
-                  </Text>
-                </Modal>
-              </>
-            ) : null }
-        </View> {/* header */}
-        {this.state.posts.length > 0
-          ? <FlatList
-          showsHorizontalScrollIndicator={false}
-          style={styles.flatlist}
-          data={this.state.posts}
-          keyExtractor={(post) => post.id.toString()}
-          renderItem={({ item }) => <Post dataItem={item} />}
-          />
-          : <View style={styles.noFlatlist}>
-              <Text style={styles.textBlack}>No tenés niguna publicación.</Text>
-              <TouchableOpacity
-                style={styles.btn}
-                onPress={() => this.addPostRedirect()}
-              >
-                <Text>¡Creá tu primer posteo!</Text>
-              </TouchableOpacity>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => this.props.handleLogout()}>
+                  <Ionicons
+                    style={styles.icon}
+                    name="log-out-outline"
+                    size="20px"
+                    color="white"
+                  />
+                </TouchableOpacity>
+              </View>{" "}
+              {/* inline */}
+              {this.state.showModal ? (
+                <>
+                  <Modal
+                    animationType="fade"
+                    transparent={false}
+                    visible={this.state.showModal}
+                    style={styles.modal}
+                  >
+                    <Text style={styles.text}>
+                      <Text style={styles.boldText}>E-mail:</Text>
+                      <Text style={styles.paddingLeft}>
+                        {auth.currentUser.email}
+                      </Text>
+                    </Text>
+                    <Text style={styles.text}>
+                      <Text style={styles.boldText}>
+                        Última fecha de ingreso:
+                      </Text>
+                      <Text style={styles.paddingLeft}>
+                        {auth.currentUser.metadata.lastSignInTime}
+                      </Text>
+                    </Text>
+                    <Text style={styles.text}>
+                      <Text style={styles.boldText}>Publicaciones:</Text>
+                      <Text style={styles.paddingLeft}>
+                        {this.state.posts.length}
+                      </Text>
+                    </Text>
+                  </Modal>
+                </>
+              ) : null}
             </View>
-        }
-        
-      </View>
+            {/* header */}
+            {this.state.posts.length > 0 ? (
+              <FlatList
+                showsHorizontalScrollIndicator={false}
+                style={styles.flatlist}
+                data={this.state.posts}
+                keyExtractor={(post) => post.id.toString()}
+                renderItem={({ item }) => <Post dataItem={item} />}
+              />
+            ) : (
+              <View style={styles.noFlatlist}>
+                <Text style={styles.textBlack}>
+                  No tenés niguna publicación.
+                </Text>
+                <TouchableOpacity
+                  style={styles.btn}
+                  onPress={() => this.addPostRedirect()}
+                >
+                  <Text>¡Creá tu primer posteo!</Text>
+                </TouchableOpacity>
+              </View>
+            )}
+          </View>
+        )}
+      </>
     );
   }
 }
@@ -137,20 +171,20 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: "#22223b",
-    boxSizing: 'border-box',
-    width: '100%',
+    boxSizing: "border-box",
+    width: "100%",
     padding: 10,
-    position: 'relative',
+    position: "relative",
     zIndex: 0,
-    flexDirection: 'column',
-    justifyContent: 'space-around'
+    flexDirection: "column",
+    justifyContent: "space-around",
   },
   inline: {
-    flexWrap: 'wrap',
-    alignItems: 'space-between',
-    flexDirection: 'row',
+    flexWrap: "wrap",
+    alignItems: "space-between",
+    flexDirection: "row",
     margin: 5,
-    justifyContent: 'space-between'
+    justifyContent: "space-between",
   },
   icon: {
     margin: 5,
@@ -159,24 +193,24 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     width: "100%",
     flex: 9,
-    flexDirection: 'column',
+    flexDirection: "column",
   },
   noFlatlist: {
     overflow: "hidden",
     width: "100%",
     flex: 9,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
   },
   btn: {
     backgroundColor: "#ffb703",
     color: "black",
-    textAlign: 'center',
+    textAlign: "center",
     padding: 7,
     marginTop: 5,
     borderRadius: 15,
-    width: '80%',
+    width: "80%",
   },
   text: {
     color: "white",
@@ -191,7 +225,7 @@ const styles = StyleSheet.create({
   username: {
     textAlign: "left",
     color: "white",
-    fontWeight: '600',
+    fontWeight: "600",
     fontSize: 15,
     padding: 5,
   },
@@ -199,7 +233,14 @@ const styles = StyleSheet.create({
     border: "none",
     width: "100%",
     marginTop: 10,
-    flexDirection: 'column',
-    justifyContent: 'space-around'
+    flexDirection: "column",
+    justifyContent: "space-around",
+  },
+  boldText: {
+    fontSize: "30",
+    fontWeight: "bold",
+  },
+  paddingLeft: {
+    paddingLeft: "5px",
   },
 });
