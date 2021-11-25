@@ -222,14 +222,14 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: 200,
-    borderRadius: "12px",
+    borderRadius: 12,
   },
   inline: {
     flexWrap: 'wrap', 
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    margin: '5px',
+    margin: 5,
   },
   inlineNear: {
     flexWrap: 'wrap', 
@@ -258,21 +258,21 @@ const styles = StyleSheet.create({
   text: {
     color: "white",
     textAlign: "center",
-    padding: "5px",
+    padding: 5,
   },
   heartIcon: {
-    marginLeft: "10px",
+    marginLeft: 10,
   },
   username: {
     textAlign: "left",
     color: "white",
-    fontWeight: 600,
-    fontSize: '15px',
-    padding: "5px",
+    fontWeight: '600',
+    fontSize: 15,
+    padding: 5,
   },
   modal: {
     border: "none",
     width: "100%",
-    marginTop: "10px",
+    marginTop: 10,
   },
 }); //Styles

@@ -103,6 +103,6 @@ const styles = StyleSheet.create({
     color: "white",
     textAlign: 'center',
     fontSize: 20,
-    fontWeight: 600,
+    fontWeight: '600',
   },
 });

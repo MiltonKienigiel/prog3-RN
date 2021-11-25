@@ -126,6 +126,6 @@ const styles = StyleSheet.create({
     marginTop: 15,
     height: 300,
     width: "90%",
-    borderRadius: "12px",
+    borderRadius: 12,
   },
 });

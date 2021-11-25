@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     alignItems: 'space-between',
     flexDirection: 'row',
-    margin: '5px',
+    margin: 5,
     justifyContent: 'space-between'
   },
   icon: {
@@ -191,14 +191,14 @@ const styles = StyleSheet.create({
   username: {
     textAlign: "left",
     color: "white",
-    fontWeight: 600,
-    fontSize: '15px',
-    padding: "5px",
+    fontWeight: '600',
+    fontSize: 15,
+    padding: 5,
   },
   modal: {
     border: "none",
     width: "100%",
-    marginTop: "10px",
+    marginTop: 10,
     flexDirection: 'column',
     justifyContent: 'space-around'
   },

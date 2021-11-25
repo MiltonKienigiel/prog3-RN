@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#22223b",
     color: "#ff9f68",
-    paddingTop: '20px',
+    paddingTop: 20,
   },
   field: {
     width: "80%",
@@ -125,6 +125,6 @@ const styles = StyleSheet.create({
     color: "white",
     textAlign: 'center',
     fontSize: 20,
-    fontWeight: 600,
+    fontWeight: '600',
   },
 });

@@ -139,13 +139,13 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.247)",
   },
   comment: {
-    padding: "5px",
+    padding: 5,
     color: "white",
   },
   commentBold: {
-    padding: "5px",
+    padding: 5,
     color: "white",
-    fontWeight: "bolder",
+    fontWeight: "bold",
   },
   text: {
     color: "white",
@@ -170,19 +170,12 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
     padding: 10,
     marginTop: 2,
-    marginBotom: 10,
+    marginBottom: 10,
     borderRadius: 4,
-  },
-  modalText: {
-    fontWeight: "bold",
-    color: "#fff",
   },
   modalView: {
     color: "white",
     borderRadius: 10,
     width: "100%",
-  },
-  modal: {
-    border: "none",
   },
 }); //Styles
